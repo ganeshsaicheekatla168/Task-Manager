@@ -1,0 +1,751 @@
+table.age-indicator {
+    position: relative;
+}
+
+table.age-indicator::after {
+    content: attr(data-age);
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: var(--tw-orange-600);
+    padding: 4px;
+    color: white;
+}
+
+.table-td-shadow {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.table-td-shadow tbody tr {
+    background-color: #fff;
+}
+
+.table-td-shadow th,
+.table-td-shadow td {
+    padding: 10px;
+}
+
+.table-td-shadow td:first-child:before {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 2px;
+    display: block;
+    height: 56px;
+    box-shadow: 0 1px 9px 1px rgb(0 0 0 / 28%);
+    -webkit-box-shadow: 0 1px 1px 1px rgb(0 0 0 / 15%);
+}
+
+
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+    position: relative;
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        font-size: 12px;
+    }
+
+    tbody>tr {
+        @apply hover:bg-gray-50;
+    }
+}
+
+.table-auto {
+
+    th {
+        @apply bg-slate-200 capitalize font-semibold leading-normal py-3 px-6 text-left;
+    }
+
+    tr {
+        @apply border-b border-gray-200 hover:bg-gray-50;
+    }
+
+    td {
+        @apply py-2 px-6;
+    }
+}
+
+.table-light {
+
+    width: 100%;
+    background: #FFF;
+    // table-layout: fixed;
+
+    >thead>tr>th {
+        @apply bg-slate-100 capitalize font-semibold leading-normal p-2 text-left whitespace-nowrap;
+    }
+
+    >tbody>tr {
+        @apply border-b border-gray-200 hover:bg-slate-50;
+    }
+
+    >tbody>tr>td {
+        @apply p-2;
+    }
+}
+
+.table-light.table-packed,
+.table-default.table-packed {
+
+    >thead>tr>th {
+        padding: 4px;
+        font-size: 12px;
+    }
+
+    >tbody>tr>td {
+        padding: 8px 4px;
+        font-size: 12px;
+        height: auto;
+    }
+}
+
+.table-default {
+    width: 100%;
+    background: #FFF;
+    border: 1px solid #D9D9DE;
+    border-radius: 8px;
+
+    >thead>tr>th {
+        @apply bg-slate-100 capitalize font-semibold leading-normal py-2 px-3 text-left whitespace-nowrap;
+        border-bottom: 1px solid #D9D9DE;
+        color: #4D5573;
+        font-size: 13px;
+    }
+
+    >tbody>tr:not(.table-no-data) {
+        // border-bottom: 1px solid #D9D9DE;
+        @apply hover:bg-lighter active:bg-active cursor-pointer border-b;
+
+        &:hover td {
+            background-color: #F5F5F5;
+        }
+    }
+
+    >tbody>tr>td {
+        @apply py-2 px-3 bg-white h-[52px];
+
+    }
+
+}
+
+.table-default.no-hover {
+    >tbody>tr {
+        &:hover td {
+            background-color: white;
+        }
+    }
+}
+
+.table-default.border {
+
+    th,
+    td {
+        border: 1px solid #D9D9DE;
+    }
+}
+
+
+.table-ehr {
+    width: 100%;
+    background: #FFF;
+    border-radius: 8px;
+
+    >thead>tr>th {
+        @apply bg-lighter capitalize font-medium leading-normal py-sm px-3 text-left whitespace-nowrap border-y-2;
+
+    }
+
+    >tbody>tr {
+
+        @apply border-b cursor-pointer;
+
+        &:hover td {
+            @apply bg-lighter-2
+        }
+        &:active td
+        {
+            @apply bg-lighter
+        }
+    }
+    >tbody>tr.active 
+    {
+        td 
+        {
+         @apply bg-primary-100
+        }
+    }
+
+    >tbody>tr>td {
+        @apply py-2 px-3 bg-white font-medium h-[52px];
+    }
+
+}
+
+
+
+
+.table-intake {
+    width: 100%;
+    background: #FFF;
+    border-radius: 8px;
+
+    >thead>tr>th {
+        @apply bg-lighter capitalize font-medium leading-normal py-sm px-3 text-left whitespace-nowrap border-y-2;
+
+        // color: #4D5573;
+        // font-size: 13px;
+    }
+
+    >tbody>tr {
+        cursor: pointer;
+        border-bottom: 1px solid #D9D9DE;
+
+        &:hover td {
+            @apply bg-lighter-2
+        }
+    }
+
+    >tbody>tr>td {
+        @apply py-2 px-3 bg-white font-medium h-[52px];
+
+    }
+
+}
+
+.table-Facility {
+    width: 100%;
+    background: #FFF;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+
+    >thead>tr>th {
+        @apply bg-white capitalize font-medium text-lighter leading-normal py-2xs px-3 text-left whitespace-nowrap;
+        font-size: 13px;
+    }
+
+    >tbody>tr {
+        @apply bg-lighter rounded;
+
+        &:hover td {
+            @apply bg-lighter
+        }
+    }
+
+    >tbody>tr>td {
+        @apply py-px px-3 bg-lighter-2 font-medium h-[52px];
+
+    }
+
+}
+
+.table-OrderSets {
+    width: 100%;
+    background: #FFF;
+    border-radius: 8px;
+    overflow: hidden;
+
+    >thead>tr>th {
+        @apply bg-white capitalize font-medium text-light leading-normal py-sm px-3 text-left whitespace-nowrap border-b;
+        font-size: 13px;
+    }
+
+    >tbody>tr {
+        &:hover td {
+            @apply bg-light
+        }
+    }
+
+    >tbody>tr>td {
+        @apply py-px px-3 border-b font-medium h-[52px];
+
+        :last-child {
+
+        }
+
+    }
+
+}
+
+
+.table-style2 {
+    width: 100%;
+    background: #FFF;
+    border-collapse: separate;
+    border-spacing: 0 20px;
+
+    >thead>tr>th {
+        @apply bg-white capitalize font-semibold px-sm text-left whitespace-nowrap text-dark text-sm;
+    }
+
+    >tbody>tr {
+        cursor: pointer;
+
+        &:hover td {
+            @apply bg-lighter-2
+        }
+    }
+
+    >tbody>tr>td {
+        @apply py-2 px-3 bg-white font-medium h-[52px];
+        border-top: 1px solid #D9D9DE;
+        border-bottom: 1px solid #D9D9DE;
+
+        &:first-of-type {
+            border-radius: 8px 0 0 8px;
+            border-left: 1px solid #D9D9DE;
+        }
+
+        &:last-of-type {
+            border-radius: 0 8px 8px 0;
+            border-right: 1px solid #D9D9DE;
+        }
+
+    }
+
+}
+
+.table-new {
+
+    width: 100%;
+    background: #FFF;
+    // table-layout: fixed;
+
+    >thead>tr>th {
+        @apply capitalize font-semibold text-light leading-normal p-2 text-left whitespace-nowrap border-b py-sm;
+    }
+
+    >tbody>tr {
+        @apply border-b border-gray-200 hover:bg-slate-50;
+    }
+
+    >tbody>tr:last-child {
+        @apply border-none;
+    }
+
+    >tbody>tr>td {
+        @apply px-2 py-sm;
+    }
+}
+
+
+
+.table-main {
+
+    width: 100%;
+    background: #FFF;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    >thead>tr>th {
+        @apply capitalize font-semibold text-light leading-normal px-xs text-left whitespace-nowrap bg-white;
+
+        &:first-child {
+            @apply pl-sm;
+        }
+    }
+
+    >tbody>tr {
+        @apply border-b rounded hover:bg-lighter-2 active:bg-light cursor-pointer
+    }
+
+    >tbody>tr>td {
+        @apply px-2 py-xs border border-r-0 border-l-0;
+
+        &:first-child {
+            @apply border-l rounded-tl-md rounded-bl-md pl-sm;
+        }
+
+        &:last-child {
+            @apply border-r rounded-tr-md rounded-br-md;
+        }
+    }
+}
+
+.table-Payment {
+
+    width: 100%;
+    background: #FFF;
+    // table-layout: fixed;
+
+    >thead>tr>th {
+        @apply capitalize font-medium text-light leading-normal text-left whitespace-nowrap border-b py-sm px-sm fs-sm
+    }
+
+    >tbody>tr {
+        @apply border-b border-gray-200 hover:bg-slate-50 active:bg-active;
+    }
+
+    >tbody>tr:last-child {
+        @apply border-none;
+    }
+
+    >tbody>tr>td {
+        @apply py-2xs px-sm fs-sm;
+    }
+}
+
+.collect-payment {
+
+    width: 100%;
+    background: #FFF;
+    // table-layout: fixed;
+
+    >thead>tr>th {
+        @apply capitalize font-medium text-light leading-normal text-left whitespace-nowrap border-b py-sm px-sm fs-sm
+    }
+
+    >tbody>tr {
+        @apply border-b border-gray-200;
+    }
+
+    >tbody>tr:last-child {
+        @apply border-none;
+    }
+
+    >tbody>tr>td {
+        @apply py-2xs px-sm fs-sm;
+    }
+}
+
+.intake-after
+{
+    width: 100%;
+    background: #FFF;
+    border: 1px solid #D9D9DE;
+    border-radius: 8px;
+    font-size: 14px !important;
+
+    >tbody>tr {
+        @apply border-b border-gray-200 hover:bg-slate-50 active:bg-active;
+    }
+
+    >tbody>tr:last-child {
+        @apply border-none;
+    }
+    >tbody>tr>td:first-child {
+        @apply px-base py-sm border-r text-left;
+    }
+
+    >tbody>tr>td {
+        @apply px-base py-sm border-r border-gray-200 text-center;
+    }
+}
+
+.intake-after-total
+{
+    width: 100%;
+    background: #FFF;
+    // border: 1px solid #D9D9DE;
+    border-radius: 8px;
+    font-size: 14px !important;
+
+    >tbody>tr {
+        @apply border-b border-gray-200 hover:bg-slate-50 active:bg-active;
+    }
+
+    >tbody>tr:last-child {
+        @apply border-none;
+    }
+    >tbody>tr>td:first-child {
+        @apply px-base py-sm border-none;
+    }
+
+    >tbody>tr>td {
+        @apply px-base py-sm border border-gray-200 text-center;
+    }
+}
+
+
+
+
+.table-Organization {
+    width: 100%;
+    background: #FFF;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    border: 1px solid #D9D9DE;
+
+    >tbody>tr {
+        @apply border-b rounded;
+
+
+    }
+    tr:last-child {
+        @apply border-none
+
+    }
+
+    >tbody>tr>td {
+        @apply py-px px-3 border-r border-b  font-medium h-[52px];
+
+        &:hover {
+            @apply bg-lighter
+        }
+
+    }
+
+}
+
+.table-Organization-ip {
+    width: 100%;
+    background: #FFF;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    border: 1px solid #D9D9DE;
+
+
+    >thead>tr>th {
+        @apply capitalize font-medium bg-slate-200 border-r leading-normal text-left whitespace-nowrap border-b py-sm px-sm;
+        font-size: 12px;
+    }
+
+    >tbody>tr {
+        @apply border-b rounded;
+
+
+    }
+    tr:last-child {
+        @apply border-none
+
+    }
+
+    >tbody>tr>td {
+        @apply py-px pl-base pr-md border-r border-b  font-medium h-[52px];
+
+        &:hover {
+            @apply bg-lighter
+        }
+
+    }
+
+}
+
+
+
+
+
+
+.table-notes {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    >thead>tr>th {
+        @apply capitalize font-semibold text-light leading-normal px-xs text-left whitespace-nowrap bg-white;
+    }
+
+    >tbody>tr {
+        @apply border-b rounded hover:bg-primary-50 ;
+    }
+
+    >tbody>tr>td {
+        @apply px-2 py-xs border border-r-0 border-l-0;
+
+        &:first-child {
+            @apply border-l rounded-tl-md rounded-bl-md pl-sm;
+        }
+
+        &:last-child {
+            @apply border-r rounded-tr-md rounded-br-md;
+        }
+    }
+}
+
+//Analytics table
+table.records-table {
+    width: 100%;
+
+    thead > tr > th {
+        @apply p-sm bg-slate-100
+    }
+    tbody > tr {
+        @apply border-b border-dotted
+    }
+    tbody > tr:last-child {
+        @apply border-b-0
+    }
+    tbody > tr > td {
+        @apply py-sm pr-sm pl-md transition-all duration-300
+    }
+    tbody > tr:hover > td {
+        @apply bg-slate-50
+    }
+    tbody > tr.nodata-row:hover > td {
+        @apply bg-transparent
+    }
+}
+
+table.collection-table {
+    width: 100%;
+
+    tbody > tr {
+        @apply border-b border-dotted
+    }
+    tbody > tr:last-child {
+        @apply border-b-0
+    }
+    tbody > tr > td {
+        @apply p-xs transition-all duration-300 bg-lighter-2 text-right
+    }
+    tbody > tr > td:first-child {
+        @apply text-left
+    }
+    tbody > tr:first-child > td {
+        @apply pt-sm
+    }
+    tbody > tr:last-child > td {
+        @apply pb-sm
+    }
+}
+
+
+.cellpadding > thead > tr > th > div, .cellpadding > tbody > tr > td > div {
+    @apply px-1.5;
+} 
+.sort-table > thead > tr > th > div, .sort-table > tbody > tr > td > div {
+    @apply px-3;
+}
+.sort-table {
+    table-layout: fixed;
+}
+
+@media only screen and (max-width: 1599px) {
+.sort-table {
+    table-layout: auto;
+    white-space: nowrap;
+}
+}
+
+@media only screen and (max-width: 1239px) {
+.table-scroll {
+    table-layout: auto;
+    white-space: nowrap;
+}
+.table-scroll > thead > tr > th:first-child, .table-scroll > tbody > tr > td:first-child {
+    position: sticky;
+    left: 0;
+    background: #fff;
+}
+.table-scroll > tbody > tr:hover > td:first-child {
+    background: #F9F9F9;
+}
+.table-scroll > tbody > tr > td:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.table-main > tbody > tr > td:last-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+}
+
+//dashboard erx kpi table layout
+.erx-table {
+
+    width: 100%;
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    >thead>tr>th {
+        @apply font-normal text-light leading-normal px-xs text-left whitespace-nowrap bg-transparent;
+    }
+
+    >tbody>tr {
+        @apply rounded bg-lighter-2;
+    }
+
+    >tbody>tr>td {
+        @apply px-xs py-2xs text-left;
+
+        &:first-child {
+            @apply rounded-tl-md rounded-bl-md;
+        }
+
+        &:last-child {
+            @apply rounded-tr-md rounded-br-md;
+        }
+    }
+}
+
+
+.table-container {
+    @apply flex-1 overflow-x-auto overflow-y-scroll pr-md ml-md h-full;
+}
+
+.table-main-v2 {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    .spacer 
+    {
+      width: 0;
+    }
+    th 
+    {
+     @apply capitalize font-semibold text-light leading-normal px-xs text-left whitespace-nowrap bg-white
+    }
+  
+    th, td {
+      background-color: #fff;
+    }
+    tr:hover {
+        td {
+            @apply bg-lighter-2;
+        }
+    }
+    tr:active {
+        td {
+            @apply bg-light;
+        }
+    }
+    td {
+      @apply border-t border-b border-base px-base py-xs ;    
+    }
+  
+    td:first-child {
+      @apply border-l border-base;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    td:last-child {
+      @apply border-r border-base;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+  
+    tr:last-child td {
+      @apply border-b border-base;
+    }
+  }
+
+table {
+    thead, tbody {
+        tr.empty-row {
+        @apply bg-transparent hover:bg-transparent active:bg-transparent;
+        }
+    }
+}
+
+
+
+.letter-preview figure.table table, .letter-preview figure.table{
+    margin: auto !important;
+    width: 100%;
+}
+
+  
+.letter-preview figure.table table, .letter-preview figure.table table td {
+    border: 1px solid #333 !important;
+    border-collapse: collapse !important;
+}

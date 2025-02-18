@@ -1,0 +1,87 @@
+h1,
+h2 {
+  // EQUALS TO .font-bold
+  font-weight: 700;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  // EQUALS TO .font-semibold
+  font-weight: 600;
+}
+
+strong {
+  // EQUALS TO .font-medium
+  font-weight: 500;
+}
+
+// FOR CK EDITOR BOLD
+.editor-container {
+  strong {
+    font-weight: bolder !important;
+  }
+}
+
+h1::first-letter,
+h2::first-letter,
+h3::first-letter,
+h4::first-letter,
+h5::first-letter,
+h6::first-letter {
+  text-transform: uppercase;
+}
+
+h1.cap-ignore::first-letter,
+h2.cap-ignore::first-letter,
+h3.cap-ignore::first-letter,
+h4.cap-ignore::first-letter,
+h5.cap-ignore::first-letter,
+h6.cap-ignore::first-letter {
+  text-transform: none;
+}
+
+h1,
+.h1 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+h2,
+.h2 {
+  font-size: 1.375rem;
+  line-height: 2.063rem;
+}
+
+h3,
+.h3 {
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+}
+
+h4,
+.h4 {
+  font-size: 1.125rem;
+  line-height: 1.688rem;
+}
+
+h5,
+.h5 {
+  // font-size: 1rem;  // 16px  
+  font-size: 0.9375rem;  // 15px
+  line-height: 1.5rem;
+}
+
+h6,
+.h6 {
+  // font-size: 0.875rem;  // 14px
+  font-size: 0.8125rem;  //13px
+  line-height: 1.125rem;
+}
+
+.h7 {
+  font-size: 0.75rem;  //12px
+  line-height: 1.125rem;
+  font-weight: 500;
+}

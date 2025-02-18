@@ -1,0 +1,18 @@
+sl-tag[variant="laborder"][lighter]::part(base) {
+    @apply bg-green-50 border-green-200 text-green-600;
+  }
+
+  sl-tag[size="xs"]::part(base) {
+    height: var(--height-xs);
+    line-height: 26px;
+    padding: 0 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  sl-tag[size="2xs"]::part(base) {
+    height: calc(var(--height-2xs) - 2px);
+    line-height: 22px;
+    padding: 0 8px;
+    border-radius: 4px;
+    font-size: 10px;
+  }

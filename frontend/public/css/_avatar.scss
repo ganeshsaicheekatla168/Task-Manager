@@ -1,0 +1,190 @@
+.avatar-group sl-avatar:not(:first-of-type) {
+    margin-left: -1rem;
+}
+.avatar-group .avatar-wrapper:not(:first-of-type) {
+    margin-left: -0.75rem;
+}
+.avatar-group {
+    display: flex;
+}
+.count-avatar {
+    background-color: #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #fff;
+}
+.count-avatar[size="2xs"] {
+    font-size: 10px;
+    height: 20px;
+    width: 20px;
+    font-weight: 600;
+}
+
+sl-avatar::part(base) {
+// padding: 20px;
+border: 1px solid #fff;
+display: flex;
+align-items: center;
+}
+
+// Avatar font and circle sizes
+
+// sl-avatar[size="tiny"]::part(initials) {
+//     font-size: 8px;
+// }
+// sl-avatar[size="tiny"]::part(base) {
+//     width: 20px;
+//     height: 20px;
+// }
+
+sl-avatar[size="xs"]::part(initials) {
+    font-size: 9px;
+    line-height: 22px;
+}
+sl-avatar[size="xs"]::part(base) {
+    width: 22px;
+    height: 22px;
+}
+
+// sl-avatar[size="sm"]::part(initials) {
+//     font-size: 12px;
+// }
+// sl-avatar[size="sm"]::part(base) {
+//     width: 28px;
+//     height: 28px;
+// }
+
+// sl-avatar[size="base"]::part(initials) {
+//     font-size: 14px;
+// }
+// sl-avatar[size="base"]::part(base) {
+//     width: 32px;
+//     height: 32px;
+// }
+
+sl-avatar[size="md"]::part(initials) {
+    font-size: 16px;
+}
+sl-avatar[size="md"]::part(base) {
+    width: 36px;
+    height: 36px;
+}
+
+sl-avatar[size="lg"]::part(initials) {
+    font-size: 18px;
+}
+sl-avatar[size="lg"]::part(base) {
+    width: 40px;
+    height: 40px;
+}
+
+// sl-avatar[size="xl"]::part(initials) {
+//     font-size: 20px;
+// }
+// sl-avatar[size="xl"]::part(base) {
+//     width: 44px;
+//     height: 44px;
+// }
+
+// DARK VARIATIONS OF AVATARS, THESE ARE DEFAULT
+sl-avatar::part(base).green {
+    @apply bg-green-500 text-white;
+}
+sl-avatar::part(base).orange {
+    @apply bg-orange-500 text-white;
+}
+sl-avatar::part(base).violet {
+    @apply bg-violet-500 text-white;
+}
+sl-avatar::part(base).amber {
+    @apply bg-amber-500 text-white;
+}
+sl-avatar::part(base).yellow {
+    @apply bg-yellow-500 text-white;
+}
+sl-avatar::part(base).lime {
+    @apply bg-lime-500 text-white;
+}
+sl-avatar::part(base).emerald {
+    @apply bg-emerald-500 text-white;
+}
+sl-avatar::part(base).cyan {
+    @apply bg-cyan-500 text-white;
+}
+sl-avatar::part(base).sky {
+    @apply bg-sky-500 text-white;
+}
+sl-avatar::part(base).blue {
+    @apply bg-blue-500 text-white;
+}
+sl-avatar::part(base).indigo {
+    @apply bg-indigo-500 text-white;
+}
+sl-avatar::part(base).purple {
+    @apply bg-purple-500 text-white;
+}
+sl-avatar::part(base).fuchsia {
+    @apply bg-fuchsia-500 text-white;
+}
+sl-avatar::part(base).pink {
+    @apply bg-pink-500 text-white;
+}
+sl-avatar::part(base).rose {
+    @apply bg-rose-500 text-white;
+}
+sl-avatar::part(base).teal {
+    @apply bg-teal-500 text-white;
+}
+
+
+// LIGHTER VARIATIONS OF THE SAME COLORS
+sl-avatar[lighter]::part(base).green {
+    @apply bg-green-200 text-green-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).orange {
+    @apply bg-orange-200 text-orange-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).violet {
+    @apply bg-violet-200 text-violet-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).amber {
+    @apply bg-amber-200 text-amber-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).yellow {
+    @apply bg-yellow-200 text-yellow-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).lime {
+    @apply bg-lime-200 text-lime-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).emerald {
+    @apply bg-emerald-200 text-emerald-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).cyan {
+    @apply bg-cyan-200 text-cyan-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).sky {
+    @apply bg-sky-200 text-sky-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).blue {
+    @apply bg-blue-200 text-blue-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).indigo {
+    @apply bg-indigo-200 text-indigo-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).purple {
+    @apply bg-purple-200 text-purple-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).fuchsia {
+    @apply bg-fuchsia-200 text-fuchsia-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).pink {
+    @apply bg-pink-200 text-pink-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).rose {
+    @apply bg-rose-200 text-rose-700 font-semibold;
+}
+sl-avatar[lighter]::part(base).teal {
+    @apply bg-teal-200 text-teal-700 font-semibold;
+}

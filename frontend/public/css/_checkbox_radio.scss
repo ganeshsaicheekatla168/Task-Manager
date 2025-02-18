@@ -1,0 +1,174 @@
+// .form-check {
+//     @apply w-4 h-4 mr-1 text-blue-600 bg-gray-100 border-slate-300 rounded;
+// }
+// .form-radio {
+//     @apply w-4 h-4 bg-white border border-gray-200 rounded-full;
+// }
+
+
+input[type='checkbox'].form-check,
+input[type='radio'].form-radio {
+    --active: var(--sl-color-primary-600);
+    --active-inner: #fff;
+    --border: #BBC1E1;
+    --border-hover: #275EFE;
+    --background: #fff;
+    --disabled: #F6F8FF;
+    --disabled-inner: #E1E6F9;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin: 0 4px 0 0;
+    cursor: pointer;
+    border: 1px solid var(--bc, var(--border));
+    background: var(--b, var(--background));
+    transition: background .3s, border-color .3s, box-shadow .2s;
+    &:after {
+        content: '';
+        display: block;
+        left: 0;
+        top: 0;
+        position: absolute;
+        transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
+    }
+    &:checked {
+        --b: var(--active);
+        --bc: var(--active);
+        --d-o: .3s;
+        --d-t: .6s;
+        --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+    }
+    &:disabled {
+        --b: var(--disabled);
+        cursor: not-allowed;
+        opacity: .9;
+    &:checked {
+        --b: var(--disabled-inner);
+        --bc: var(--border);
+    }
+    & + label {
+        cursor: not-allowed;
+    }
+    }
+    &:hover {
+    &:not(:checked) {
+        &:not(:disabled) {
+        --bc: var(--border-hover);
+        }
+    }
+    }
+    &:focus-visible {
+    outline: var(--sl-color-primary-600) solid var(--focus-ring-width);
+    outline-offset: 2px;
+    transition: none !important;
+    }
+    &:not(.switch) {
+        &:after {
+            opacity: var(--o, 0);
+        }
+        &:checked {
+            --o: 1;
+        }
+    }
+    & + label {
+    line-height: 20px;
+    // display: inline-block;
+    // vertical-align: top;
+    // cursor: pointer;
+    // margin-left: 4px;
+    // margin-bottom: 0;
+    }
+}
+input[type='checkbox'].form-check {
+    &:not(.switch) {
+        border-radius: 4px;
+        &:after {
+            width: 6px;
+            height: 10px;
+            border: 2px solid var(--active-inner);
+            border-top: 0;
+            border-left: 0;
+            left: 5px;
+            top: 2px;
+            transform: rotate(var(--r, 20deg));
+        }
+        &:checked {
+            --r: 43deg;
+        }
+    }
+    &.switch {
+        width: 38px;
+        border-radius: 11px;
+        &:after {
+            left: 2px;
+            top: 2px;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            background: var(--ab, var(--border));
+            transform: translateX(var(--x, 0));
+        }
+        &:checked {
+            --ab: var(--active-inner);
+            --x: 17px;
+        }
+        &:disabled {
+            &:not(:checked) {
+                &:after {
+                    opacity: .6;
+                }
+            }
+        }
+    }
+}
+input[type='radio'].form-radio {
+    border-radius: 50%;
+    &:after {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--active-inner);
+    opacity: 0;
+    transform: scale(var(--s, .7));
+    }
+    &:checked {
+    --s: .5;
+    }
+}
+
+// CHECKBOX DEFAULT SIZE
+input[type='checkbox'].form-check {
+    width: 18px;
+    height: 18px;
+    @apply shrink-0;
+}
+
+
+// RADIO BUTTON DEFAULT SIZE
+input[type='radio'].form-radio {
+    width: 20px;
+    height: 20px;
+    @apply shrink-0;
+}
+
+// CHECKBOX SMALL SIZE
+input[type='checkbox'].form-check.check-sm, input[type='checkbox'][size="small"].form-check {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+
+    &::after {
+        left: 4px;
+        top: 0;
+    }
+}
+
+// input[type=checkbox].form-check.check-sm:not(.switch):after {
+//     width: 5px;
+//     height: 9px;
+//     left: 5px;
+//     top: 1px;
+// }
