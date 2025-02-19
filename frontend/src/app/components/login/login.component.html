@@ -23,8 +23,33 @@
             <!-- Password -->
             <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-              <input type="password" id="password" formControlName="password" class="w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
+              <div class="relative">
+                  <input 
+                      [type]="passwordVisible ? 'text' : 'password'" 
+                      id="password" 
+                      formControlName="password" 
+                      class="w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
+                  />
+                  
+                  <!-- Visibility Toggle Button -->
+                  <button 
+                      type="button" 
+                      (click)="passwordVisible = !passwordVisible" 
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-white">
+                      <!-- Eye Icon (Visible Password) -->
+                      <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                          <path d="M12 12l.01 0"></path>
+                      </svg>
+                      <!-- Crossed Eye Icon (Hidden Password) -->
+                      <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                          <path d="M1 1l22 22"></path>
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                      </svg>
+                  </button>
+              </div>
+          </div>
+          
   
             <!-- Remember me -->
             <div class="flex items-center justify-between">
@@ -44,21 +69,6 @@
               <p-button label="Sign In" type="submit" class="grid" [disabled]="loginForm.invalid"></p-button>
             </div>
   
-            <!-- Error and Success Toast -->
-            
-            <div *ngIf="errorMessage" class="fixed top-5 right-5 w-96 bg-red-100 text-red-800 p-4 rounded-lg shadow-lg flex items-center space-x-3">
-                <!-- Triangle Icon -->
-                <svg class="w-6 h-6 text-red-800" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L1 22h22L12 2zm0 15h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                </svg>
-                
-                <div class="text-sm">
-                  <p>{{ errorMessage }}</p>
-                </div>
-              </div>
-              
-              
-  
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet? <a [routerLink]="'/signup'" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
             </p>
@@ -66,5 +76,22 @@
         </div>
       </div>
     </div>
+
+     
+  
+      
+      <!-- Error Toast -->
+      <div *ngIf="errorMessage" class="fixed top-5 right-5 w-96 bg-red-200 text-red-800 p-4 rounded-lg shadow-lg flex items-center space-x-3">
+              <!-- Error Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.2rem; height: 1.2rem;">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>              
+          
+              <div class="text-sm">
+                  <p class="font-semibold">Failure</p>
+                  <p [innerHTML]="errorMessage"></p>
+              </div>
+      </div>
+      
   </section>
   

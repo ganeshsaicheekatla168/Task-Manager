@@ -16,7 +16,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   errorMessage: string | null =null;
-
+  passwordVisible:boolean = false;
   constructor(private fb: FormBuilder,private userService:UserService , private router:Router) {
     // Initialize the form group with validators
     this.loginForm = this.fb.group({

@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   ];
   sideBarvisible:boolean=false;
 
-  constructor(private userService: UserService,private router:Router,private appServices:AppService){}
+  constructor(private userService: UserService){}
 
   ngOnInit(): void {
     const userInfo = this.userService.getUserInfo();
@@ -61,17 +61,11 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.userService.clearUserData();
-    this.router.navigate(['/login']);
   }
 
-  viewTasks(){
-    this.sideBarvisible= false;
-    
-  }
+ 
 
-  createTasks(){
-    this.sideBarvisible= false;
-  }
+
   
 
 

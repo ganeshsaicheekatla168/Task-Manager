@@ -1,0 +1,253 @@
+<app-header></app-header>
+<section>
+    <div class="card my-2">
+        <p-table 
+        [value]="currentTasks"
+        [rows]="10"
+        [first]="first"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[1, 10, 15]"
+        [lazy]="true"
+        (onLazyLoad)="loadTasks($event)"
+        [loading]="loading"
+        [globalFilterFields]="['title']"
+        [paginator]="true"
+        #dt2>
+            <ng-template #caption>
+                <div class="flex items-center">
+                    <h5>Task List</h5>
+                    <div class="flex items-center gap-sm ml-auto">
+                    <!-- search data by title -->
+                        <!-- Filter by Title -->
+                        <input pInputText
+                            type="text" 
+                            placeholder="Search by Title"
+                            ariaLabel="Filter title"
+                            [(ngModel)]="titleFilter"
+                            (ngModelChange)="onFilterChange()"/>
+                        
+                        
+                        <!-- Filter by Priority -->
+                        <p-dropdown
+                        [options]=" priorityOptionsToFilter"
+                        [(ngModel)]="selectedPriority"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Filter by Status"
+                        (onChange)="onFilterChange()"
+                        ></p-dropdown>
+
+                        <!-- Filter by Status -->
+                        <p-dropdown
+                        [options]="statusOptions"
+                        [(ngModel)]="selectedStatus"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Filter by Status"
+                        (onChange)="onFilterChange()"
+                    ></p-dropdown>
+
+                    
+                    
+                    </div>
+
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th >Title</th>
+                    <th>Assigned To</th>
+                    <th >due Date</th>
+                    <th >Status</th>
+                    <th>Priority</th>
+                    <th>Is Read</th>
+                    <th>action</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-pagedTask>
+                <tr>
+                    <td>{{ pagedTask.title }}</td>
+                    <td>{{ pagedTask.assignedTo }}</td>
+                    <td>{{ pagedTask.dueDate }}</td>
+                    <td>{{ pagedTask.status }}</td>
+                    <td>{{ pagedTask.priority }}</td> 
+                    <td>{{pagedTask.isRead}}</td>
+                
+                    <td>
+                    <div class="flex gap-base mx-auto" >
+                    <div class="cursor-pointer "  (click)="editCurrentTask(pagedTask)"> <i class="pi true-icon pi-pencil text-blue-700"></i></div>
+                    <div class="cursor-pointer "  (click)="setDeleteId(pagedTask._id,pagedTask.title)"><i class="pi true-icon pi-trash text-red-500"></i></div>
+                    </div>
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="5">No Tasks found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+        <!-- Delete Confirmation Popup -->
+        <p-dialog header="Confirm Delete" [(visible)]="deleteMode" [modal]="true" [closable]="false" [style]="{width: '400px'}">
+  
+            <!-- Task Title -->
+            <div class="text-gray-800 ">
+                Are you sure  want to delete the task with Title: <span class="font-semibold">{{ deletedTaskTitle }}?</span>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="flex justify-center gap-4 mt-8">
+              <p-button label="Cancel" icon="pi pi-times" class="p-button-secondary" (click)="changeDeleteMode()"></p-button>
+              <p-button label="Delete" severity="danger" icon="pi pi-trash" (click)="confirmDeleteTask()"></p-button>
+            </div>
+            
+        </p-dialog>
+          
+          
+  
+    </div>
+
+
+    <p-dialog header="Edit Task Details" [(visible)]="editMode" [modal]="true" [closable]="false" [style]="{width: '500px'}">
+        <!-- Form Binding to ngSubmit -->
+        <form [formGroup]="formData" (ngSubmit)="confirmEditTask()">
+    
+            <!-- Title and Assigned To (Inline) -->
+            <div class="flex gap-4 mb-4">
+                <!-- Title -->
+                <div class="flex-1">
+                    <label for="title" class="text-gray-700 font-medium">Title</label>
+                    <input pInputText id="title" placeholder="Enter task title" formControlName="title" class="w-full h-12" />
+                    <!-- Error message for Title -->
+                    <div *ngIf="formData.get('title')?.touched && formData.get('title')?.invalid" class="text-red-500 text-sm mt-1">
+                        <div *ngIf="formData.get('title')?.errors?.['required']">Title is required.</div>
+                        <div *ngIf="formData.get('title')?.errors?.['maxlength']">Title cannot be more than 50 characters.</div>
+                        <div *ngIf="formData.get('title')?.errors?.['minlength']">Title must be more than 5 characters.</div>
+                    </div>
+                </div>
+    
+                <!-- Assigned To (Input Box) -->
+                <div class="flex-1">
+                    <label for="assignedTo" class="text-gray-700 font-medium">Assigned To</label>
+                    <p-select class="w-full h-12" id="assignedTo" placeholder="Select User" formControlName="assignedTo" [options]="users" optionLabel="name" optionValue="name"></p-select>
+                    <!-- Error message for Assigned To -->
+                    <div *ngIf="formData.get('assignedTo')?.touched && formData.get('assignedTo')?.invalid" class="text-red-500 text-sm mt-1">
+                        <div *ngIf="formData.get('assignedTo')?.errors?.['required']">Assigned To is required.</div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Due Date (Date Picker) and Priority (Dropdown) in same height -->
+            <div class="flex gap-4 mb-4">
+                <!-- Due Date (Date Picker) - Same height as Title & Assigned To -->
+                <div class="flex-1">
+                    <label for="dueDate" class="text-gray-700 font-medium ">Due Date</label>
+                    <p-datepicker id="dueDate" formControlName="dueDate" class="w-full h-12"></p-datepicker>
+                    <!-- Error message for Due Date -->
+                    <div *ngIf="formData.get('dueDate')?.touched && formData.get('dueDate')?.invalid" class="text-red-500 text-sm mt-1">
+                        <div *ngIf="formData.get('dueDate')?.errors?.['required']">Due Date is required.</div>
+                    </div>
+                </div>
+    
+                <!-- Priority (Dropdown) - Same height as Title & Assigned To -->
+                <div class="flex-1">
+                    <label for="priority" class="text-gray-700 font-medium">Priority</label>
+                    <p-select id="priority" formControlName="priority" class="w-full h-12" [options]="priorityOptions" placeholder="Select Priority"></p-select>
+                    <!-- Error message for Priority -->
+                    <div *ngIf="formData.get('priority')?.touched && formData.get('priority')?.invalid" class="text-red-500 text-sm mt-1">
+                        <div *ngIf="formData.get('priority')?.errors?.['required']">Priority is required.</div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Description (Text Area) -->
+            <div class="flex flex-col gap-2 mb-4">
+                <label for="description" class="text-gray-700 font-medium">Description</label>
+                <textarea id="description" placeholder="Enter task description" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" formControlName="description"></textarea>
+                <div *ngIf="formData.get('description')?.touched && formData.get('description')?.invalid" class="text-red-500 text-sm mt-1">
+                    <div *ngIf="formData.get('description')?.errors?.['maxlength']">Description cannot be more than 100 characters.</div>
+                </div>
+            </div>
+    
+            <!-- Status (Radio Buttons - Inline) -->
+            <div class="flex flex-col gap-2 mb-4">
+                <label class="text-gray-700 font-medium">Status</label>
+                <div class="flex gap-4 mb-2">
+                    <div class="flex items-center">
+                        <p-radioButton id="pending" name="status" value="pending" formControlName="status"></p-radioButton>
+                        <label for="pending" class="text-gray-700 pl-2">Pending</label>
+                    </div>
+                    <div class="flex items-center">
+                        <p-radioButton id="in-progress" name="status" value="in-progress" formControlName="status"></p-radioButton>
+                        <label for="in-progress" class="text-gray-700 pl-2">In Progress</label>
+                    </div>
+                    <div class="flex items-center">
+                        <p-radioButton id="completed" name="status" value="completed" formControlName="status"></p-radioButton>
+                        <label for="completed" class="text-gray-700 pl-2">Completed</label>
+                    </div>
+                </div>
+                <!-- Error message for Status -->
+                <div *ngIf="formData.get('status')?.touched && formData.get('status')?.invalid" class="text-red-500 text-sm mt-1">
+                    <div *ngIf="formData.get('status')?.errors?.['required']">Status is required.</div>
+                </div>
+            </div>
+    
+            <!-- Is Read (Checkbox) -->
+            <div class="flex items-center mb-6">
+                <p-checkbox id="isRead" formControlName="isRead" binary="true"></p-checkbox>
+                <label for="isRead" class="text-gray-700 ml-2">Is Read</label>
+            </div>
+    
+            <!-- Submit and Cancel Buttons -->
+            <div class="flex justify-between gap-4">
+                <!-- Submit Button -->
+                <button type="submit" [disabled]="formData.invalid" class="w-1/2 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Submit
+                </button>
+    
+                <!-- Cancel Button -->
+                <button type="button" (click)="clearData()" class="w-1/2 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </p-dialog>
+    
+   
+    <!-- Toast notification -->
+    <div *ngIf="successMessage || errorMessage" class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 z-200">
+    <!-- Your content here (form, etc.) -->
+
+    <!-- Success Toast -->
+        <div *ngIf="successMessage" class="fixed top-5 right-5 w-96 bg-green-100 text-green-800 p-4 rounded-lg shadow-lg flex items-center space-x-3">
+            <!-- Success Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.2rem; height: 1.2rem;">
+                <path d="M20 6L9 17l-5-5"></path>
+            </svg>
+
+            <div class="text-sm">
+                <p class="font-semibold">Success</p>
+                <p [innerHTML]="toastMessage"></p>
+            </div>
+        </div>
+
+        
+        <!-- Error Toast -->
+        <div *ngIf="errorMessage" class="fixed top-5 right-5 w-96 bg-red-200 text-red-800 p-4 rounded-lg shadow-lg flex items-center space-x-3">
+            <!-- Error Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.2rem; height: 1.2rem;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2zm0-10h2v8h-2z"></path>
+            </svg>
+        
+            <div class="text-sm">
+                <p class="font-semibold">Failure</p>
+                <p [innerHTML]="toastMessage"></p>
+            </div>
+        </div>
+        
+
+    </div>
+</section>

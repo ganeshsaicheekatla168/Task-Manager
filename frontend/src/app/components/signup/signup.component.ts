@@ -26,7 +26,7 @@ export class SignupComponent{
   toastMessage:string='';
   successMessage:boolean =false;
   errorMessage:boolean = false;
-
+  passwordVisible:boolean =false;
   constructor(private userService:UserService) {
     this.registerForm = new FormGroup({
       'first_name': new FormControl(null, [
@@ -47,7 +47,7 @@ export class SignupComponent{
       'password': new FormControl(null, [
         Validators.required,
         Validators.maxLength(8),
-        Validators.pattern('^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$')
+        Validators.pattern('^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#%$!&*])[a-zA-Z0-9#%$!&*]{8}$')
         ]),
       'terms': new FormControl(false, Validators.requiredTrue), // This is the terms checkbox control
     });    
@@ -73,7 +73,7 @@ export class SignupComponent{
              // Call your service to register the user
              console.log(response);
              this.registerForm.reset();
-             this.toastMessage='Registration Successfull <br> you can Login Now';
+             this.toastMessage='User Registration Successfull';
              this.successMessage=true;
              setTimeout(() => {
                     this.clearToastmsg();

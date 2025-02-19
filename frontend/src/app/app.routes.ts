@@ -10,7 +10,8 @@ export const routes: Routes = [
         .then(m => m.LoginComponent)
     }
     
-},
+}
+,
 {
     path : "dashboard",
     pathMatch : "full",
@@ -24,6 +25,22 @@ export const routes: Routes = [
     loadComponent : () => {
             return import("../app/components/signup/signup.component")
             .then(m => m.SignupComponent)
+    }
+},
+{
+    path : "viewTasks",
+    pathMatch : "full",
+    loadComponent : () => {
+            return import("../app/components/view-tasks/view-tasks.component")
+            .then(m => m.ViewTasksComponent)
+    }
+},
+{
+    path : "createTask",
+    pathMatch : "full",
+    loadComponent : () => {
+            return import("../app/components/create-task/create-task.component")
+            .then(m => m.CreateTaskComponent)
     }
 }
 ];
