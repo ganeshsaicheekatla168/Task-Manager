@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
+import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
+import { HomeComponent } from './components/home/home.component';
+import { CreateTaskComponent } from './components/create-task/create-task.component';
+import { ViewTasksComponent } from './components/view-tasks/view-tasks.component';
 
 export const routes: Routes = [
+
+
     
 {
     path : "login",
@@ -12,14 +18,28 @@ export const routes: Routes = [
     
 }
 ,
+
+   
 {
-    path : "dashboard",
-    pathMatch : "full",
-    loadComponent : () => {
-            return import("../app/components/dashboard/dashboard.component")
-            .then(m => m.DashboardComponent)
-    }
-},{
+        path: 'home',
+        component: HomeComponent, 
+        children: [
+          {
+            path: 'dashboard',
+            component: DashboardComponent
+          },
+          {
+            path: 'createTask',
+            component: CreateTaskComponent
+          },
+          {
+            path : "viewTasks",
+            component:ViewTasksComponent
+          }
+        
+        ]
+}
+,{
     path : "signup",
     pathMatch : "full",
     loadComponent : () => {
@@ -27,20 +47,7 @@ export const routes: Routes = [
             .then(m => m.SignupComponent)
     }
 },
-{
-    path : "viewTasks",
-    pathMatch : "full",
-    loadComponent : () => {
-            return import("../app/components/view-tasks/view-tasks.component")
-            .then(m => m.ViewTasksComponent)
-    }
-},
-{
-    path : "createTask",
-    pathMatch : "full",
-    loadComponent : () => {
-            return import("../app/components/create-task/create-task.component")
-            .then(m => m.CreateTaskComponent)
-    }
-}
+
+
+
 ];
