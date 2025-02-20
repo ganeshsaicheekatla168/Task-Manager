@@ -1,4 +1,4 @@
-<app-header></app-header>
+
 <section>
     <div class="card my-2">
         <p-table 
@@ -109,8 +109,7 @@
           
   
     </div>
-
-
+    
     <p-dialog header="Edit Task Details" [(visible)]="editMode" [modal]="true" [closable]="false" [style]="{width: '500px'}">
         <!-- Form Binding to ngSubmit -->
         <form [formGroup]="formData" (ngSubmit)="confirmEditTask()">
@@ -119,7 +118,7 @@
             <div class="flex gap-4 mb-4">
                 <!-- Title -->
                 <div class="flex-1">
-                    <label for="title" class="text-gray-700 font-medium">Title</label>
+                    <label for="title" class="text-gray-700 font-medium">Title*</label>
                     <input pInputText id="title" placeholder="Enter task title" formControlName="title" class="w-full h-12" />
                     <!-- Error message for Title -->
                     <div *ngIf="formData.get('title')?.touched && formData.get('title')?.invalid" class="text-red-500 text-sm mt-1">
@@ -131,7 +130,7 @@
     
                 <!-- Assigned To (Input Box) -->
                 <div class="flex-1">
-                    <label for="assignedTo" class="text-gray-700 font-medium">Assigned To</label>
+                    <label for="assignedTo" class="text-gray-700 font-medium">Assigned To*</label>
                     <p-select class="w-full h-12" id="assignedTo" placeholder="Select User" formControlName="assignedTo" [options]="users" optionLabel="name" optionValue="name"></p-select>
                     <!-- Error message for Assigned To -->
                     <div *ngIf="formData.get('assignedTo')?.touched && formData.get('assignedTo')?.invalid" class="text-red-500 text-sm mt-1">
@@ -144,8 +143,8 @@
             <div class="flex gap-4 mb-4">
                 <!-- Due Date (Date Picker) - Same height as Title & Assigned To -->
                 <div class="flex-1">
-                    <label for="dueDate" class="text-gray-700 font-medium ">Due Date</label>
-                    <p-datepicker id="dueDate" formControlName="dueDate" class="w-full h-12"></p-datepicker>
+                    <label for="dueDate" class="text-gray-700 font-medium ">Due Date*</label>
+                    <p-datepicker id="dueDate" formControlName="dueDate" class="w-full h-12" [minDate]="today"></p-datepicker>
                     <!-- Error message for Due Date -->
                     <div *ngIf="formData.get('dueDate')?.touched && formData.get('dueDate')?.invalid" class="text-red-500 text-sm mt-1">
                         <div *ngIf="formData.get('dueDate')?.errors?.['required']">Due Date is required.</div>
@@ -154,7 +153,7 @@
     
                 <!-- Priority (Dropdown) - Same height as Title & Assigned To -->
                 <div class="flex-1">
-                    <label for="priority" class="text-gray-700 font-medium">Priority</label>
+                    <label for="priority" class="text-gray-700 font-medium">Priority*</label>
                     <p-select id="priority" formControlName="priority" class="w-full h-12" [options]="priorityOptions" placeholder="Select Priority"></p-select>
                     <!-- Error message for Priority -->
                     <div *ngIf="formData.get('priority')?.touched && formData.get('priority')?.invalid" class="text-red-500 text-sm mt-1">
@@ -174,7 +173,7 @@
     
             <!-- Status (Radio Buttons - Inline) -->
             <div class="flex flex-col gap-2 mb-4">
-                <label class="text-gray-700 font-medium">Status</label>
+                <label class="text-gray-700 font-medium">Status*</label>
                 <div class="flex gap-4 mb-2">
                     <div class="flex items-center">
                         <p-radioButton id="pending" name="status" value="pending" formControlName="status"></p-radioButton>
@@ -204,7 +203,7 @@
             <!-- Submit and Cancel Buttons -->
             <div class="flex justify-between gap-4">
                 <!-- Submit Button -->
-                <button type="submit" [disabled]="formData.invalid" class="w-1/2 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                <button type="submit" class="w-1/2 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                     Submit
                 </button>
     
@@ -216,38 +215,6 @@
         </form>
     </p-dialog>
     
-   
-    <!-- Toast notification -->
-    <div *ngIf="successMessage || errorMessage" class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 z-200">
-    <!-- Your content here (form, etc.) -->
-
-    <!-- Success Toast -->
-        <div *ngIf="successMessage" class="fixed top-5 right-5 w-96 bg-green-100 text-green-800 p-4 rounded-lg shadow-lg flex items-center space-x-3">
-            <!-- Success Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.2rem; height: 1.2rem;">
-                <path d="M20 6L9 17l-5-5"></path>
-            </svg>
-
-            <div class="text-sm">
-                <p class="font-semibold">Success</p>
-                <p [innerHTML]="toastMessage"></p>
-            </div>
-        </div>
-
-        
-        <!-- Error Toast -->
-        <div *ngIf="errorMessage" class="fixed top-5 right-5 w-96 bg-red-200 text-red-800 p-4 rounded-lg shadow-lg flex items-center space-x-3">
-            <!-- Error Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.2rem; height: 1.2rem;">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2zm0-10h2v8h-2z"></path>
-            </svg>
-        
-            <div class="text-sm">
-                <p class="font-semibold">Failure</p>
-                <p [innerHTML]="toastMessage"></p>
-            </div>
-        </div>
-        
-
-    </div>
 </section>
+
+<p-toast/>

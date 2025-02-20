@@ -12,6 +12,8 @@ import { AppService } from '../../services/apps/app.service';
 import { UserService } from '../../services/users/user.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { HeaderComponent } from '../header/header.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-task',
@@ -24,10 +26,11 @@ import { HeaderComponent } from '../header/header.component';
       DatePickerModule ,
       ReactiveFormsModule,
       InputTextModule,
-      HeaderComponent
+      ToastModule
       ],
   templateUrl: './create-task.component.html',
-  styleUrl: './create-task.component.scss'
+  styleUrl: './create-task.component.scss',
+  providers:[MessageService]
 })
 export class CreateTaskComponent {
 
@@ -42,12 +45,11 @@ export class CreateTaskComponent {
     status: 'pending',
     isRead: false
   };
+
+  today: Date = new Date();
    
 
-    //toast message
-    successMessage:boolean =  false;
-    errorMessage:boolean = false;
-    toastMessage:string= '';
+ 
  
   
     
@@ -81,7 +83,7 @@ export class CreateTaskComponent {
     //pagination variable
     formData: FormGroup ;
   
-    constructor(private taskService:TaskService ,private fb: FormBuilder,private appServices:AppService ,private userService:UserService){
+    constructor(private taskService:TaskService ,private fb: FormBuilder,private messageService:MessageService ,private userService:UserService){
        // Initialize formData with FormBuilder
        this.formData = this.fb.group({
         _id:[''],
@@ -97,7 +99,6 @@ export class CreateTaskComponent {
 
     ngOnInit(): void {
       // Load your Tasks here
-    
       this.loadUserList();
     }
   
@@ -108,43 +109,25 @@ export class CreateTaskComponent {
       this.taskService.onTaskCreate(this.formData.value).subscribe({
        next: (responseData)=>{
          console.log(responseData.success);
-              
-               this.toastMessage='Task created successfully!';
-               this.successMessage =true;
-         
           //clear form data
           this.clearData();
-          
-          setTimeout(() => {
-           this.clearToast();  // Reset  message after a timeout
-         }, 4000);
+          this.showMessage();
        },
        error:(error)=>{
 
         if(error.status === 401){
-          this.userService.clearUserData();
+          this.showSessionExpired();
+        }else{
+          console.log("creation error");
+          console.log(error.error.error);
+          this.showError(error.error.error.substring(31));
         }
-         
-         console.log("creation error");
-         console.log(error.error.error);
- 
-         this.toastMessage = error.error.error.substring(31);
-         this.errorMessage = true;
-        
-         setTimeout(() => {
-           this.clearToast();  // Reset  message after a timeout
-         }, 4000);
-       
        },
        
      });
    }
 
-   clearToast():void{
-    this.errorMessage = false;
-    this.successMessage =false;
-    this.toastMessage = '';
-  }
+
 
   //used in form control
   clearData(){
@@ -169,22 +152,47 @@ export class CreateTaskComponent {
       },
       error: (error) => {
         if(error.status === 401){
-          this.userService.clearUserData();
+          this.showSessionExpired();
         }
-        console.error('Error fetching users:', error);
-        this.toastMessage = "Error fetching users:"+error;
-        this.errorMessage = true;
-        setTimeout(() => {
-          this.clearToast();  // Reset error message after a timeout
-        }, 4000);
+        else{
+        this.showError("Error fetching users:"+error);
+        }
       },
-      complete : ()=>{
-        setTimeout(() => {
-          this.clearToast();  // Reset error message after a timeout
-        }, 4000);
-      }
     })
   }
+
+  showMessage() {
+    this.messageService.add({ 
+      severity: 'success', 
+      summary: 'Success', 
+      detail: 'Task Created Successfully', 
+      life: 2000 
+    });
+  }
+
+   // Method to trigger a failure (error) toast message
+  showError(message:string) {
+    this.messageService.add({ 
+      severity: 'error',  // Changed to 'error' for failure messages
+      summary: 'Failed', 
+      detail: `${message}, Please try again.`, 
+      life: 4000  // Message will disappear after 4 seconds
+    });
+  }
+
+  showSessionExpired(){
+    this.messageService.add({ 
+      severity: 'warn',  // Changed to 'error' for failure messages
+      summary: 'Session Expired.', 
+      detail: `Please Login Again`, 
+      life: 4000  // Message will disappear after 4 seconds
+    });
+    setTimeout(() => {
+      this.userService.clearUserData();
+    }, 4000);
+  }
+
+  
    
   
 

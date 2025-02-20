@@ -18,6 +18,7 @@ import { UserService } from '../../services/users/user.service';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { HeaderComponent } from '../header/header.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-view-tasks',
@@ -32,13 +33,15 @@ import { HeaderComponent } from '../header/header.component';
       ReactiveFormsModule,
       DropdownModule,
       DialogModule,
-      ToastModule,
-      HeaderComponent
+      ToastModule
     ],
   templateUrl: './view-tasks.component.html',
-  styleUrl: './view-tasks.component.scss'
+  styleUrl: './view-tasks.component.scss',
+  providers:[MessageService]
 })
 export class ViewTasksComponent {
+
+   today:Date = new Date();
 
     currentTasks = [{
       "_id": "",
@@ -66,10 +69,7 @@ export class ViewTasksComponent {
    
    
   
-    //toast message
-    successMessage:boolean =  false;
-    errorMessage:boolean = false;
-    toastMessage:string= '';
+    
     
    //edit mode variables
     editMode :boolean=false;
@@ -113,7 +113,7 @@ export class ViewTasksComponent {
     rows:number=10;
     formData: FormGroup ;
   
-    constructor(private taskService:TaskService ,private fb: FormBuilder,private appServices:AppService ,private userService:UserService){
+    constructor(private taskService:TaskService ,private fb: FormBuilder,private messageService:MessageService ,private userService:UserService){
        // Initialize formData with FormBuilder
        this.formData = this.fb.group({
         _id:[''],
@@ -127,8 +127,8 @@ export class ViewTasksComponent {
       });
     }
   
-    ngOnInit(): void {
-      this.loadUserList();
+    async ngOnInit() {
+      await this.loadUserList();
       this.loadTasks({first:0 ,limit : 10});
       
     }
@@ -160,19 +160,17 @@ export class ViewTasksComponent {
   
             } else {
               console.error('Error fetching tasks:', response.error);
+              this.showError('Error fetching tasks'+response.error.error.error);
             }
          
           },
           error : (error) => {
-            if(error.status === 401){
-              this.userService.clearUserData();
-            }
             console.error('API call failed:', error);
-            
+            this.showError( error);
           }
         });
     }
-    loadUserList():void{
+    async loadUserList(){
       this.userService.getAllUsersNamesAndIds().subscribe({
         next : (responseData)=>{
           console.log(responseData);
@@ -190,29 +188,14 @@ export class ViewTasksComponent {
         },
         error: (error) => {
           if(error.status === 401){
-            this.userService.clearUserData();
+            this.showSessionExpired();
           }
           else{
             console.error('Error fetching users:', error);
-            this.toastMessage = "Error fetching users:"+error;
-            this.errorMessage = true;
-            setTimeout(() => {
-              this.clearToast();  // Reset error message after a timeout
-            }, 4000);
+            this.showError('Error fetching users:'+ error);
           }
-        },
-        complete : ()=>{
-          setTimeout(() => {
-            this.clearToast();  // Reset error message after a timeout
-          }, 4000);
         }
       })
-    }
-  
-    clearToast():void{
-      this.errorMessage = false;
-      this.successMessage =false;
-      this.toastMessage = '';
     }
   
   
@@ -235,28 +218,20 @@ export class ViewTasksComponent {
            console.log("delete data successfully");
            console.log(response.data);
            this.loadTasks({first:this.first,rows:this.rows});
-           this.toastMessage = "Task deleted successfully"
-           this.successMessage = true;
            this.deleteMode=false;
            console.log(removedTask);
-           setTimeout(() => {
-            this.clearToast();  // Reset  message after a timeout
-           }, 4000);
+           this.showMessage("Task deletion successfully");
          } ,
          error : (err) =>{
-          if(err.status === 401){
-            this.userService.clearUserData();
-          }
-          else{
-            this.loadTasks({first:this.first,rows:this.rows});
-            this.toastMessage = "Task Deletion unsuccessfully "
-            this.errorMessage = true;
-              this.deleteMode=false;
-            console.log(err.error.error);
-            setTimeout(() => {
-              this.clearToast();  // Reset  message after a timeout
-            }, 4000);
-          }
+            if(err.status === 401){
+              this.showSessionExpired();
+            }else{
+            
+              this.loadTasks({first:this.first,rows:this.rows});
+                this.deleteMode=false;
+              console.log(err.error.error);
+              this.showError(err.error.error);
+            }
          },
        
        })
@@ -276,13 +251,14 @@ export class ViewTasksComponent {
           title: task.title,
           description: task.description,
           assignedTo: task.assignedTo,
-          dueDate: task.dueDate.split('T')[0], // Convert ISO string to local date format
           priority: task.priority,
           status: task.status,
           isRead: task.isRead
         });
       }
-      console.log("Editing Task"+this.formData.value);
+      else{
+         console.log("Editing Task"+this.formData);
+      }
     }
     confirmEditTask(){
       console.log(this.formData.value);
@@ -290,7 +266,6 @@ export class ViewTasksComponent {
           if (this.formData && this.formData.valid) {
             // Prepare the task data for update
             const updatedTask = { ...this.formData.value }; // Get the updated values from the form
-  
             // Ensure no fields like `createdAt`, `updatedAt` or `__v` are submitted
             delete updatedTask._v;
             delete updatedTask.createdAt;
@@ -299,35 +274,29 @@ export class ViewTasksComponent {
             this.taskService.onTaskUpdate(this.formData.value._id, updatedTask).subscribe({
               next: (response) => {
                 this.loadTasks({first:this.first,rows:this.rows});
-                this.toastMessage = "Task updated successfully"
-                this.successMessage = true;
                 
                 // Close edit mode
                 this.clearData();
-                setTimeout(() => {
-                  this.clearToast();  // Reset  message after a timeout
-                }, 4000);
+                this.showMessage("Task updated successfully");
               },
               error: (err) => {
-                if(err.status === 401){
-                  this.userService.clearUserData();
-                }
-                else{
-                
-                    this.loadTasks({first:this.first,rows:this.rows});
-                    this.toastMessage = "Task updation unsuccessfully"
-                    this.errorMessage = true;
-                    console.log('Error:', err.error.error);
-                    // Close edit mode
-                    this.clearData();
-                    setTimeout(() => {
-                      this.clearToast();  // Reset  message after a timeout
-                    }, 4000);
-                  }
+                    if(err.status === 401){
+                      this.showSessionExpired();
+                    }
+                    else{
+                    
+                      this.loadTasks({first:this.first,rows:this.rows});
+                      console.log('Error:', err.error.error);
+                      // Close edit mode
+                      this.clearData();
+                      this.showError('Error:'+ err.error.error);
+                    }
+                  
               },
               
             });
           } else {
+            this.showError("Form Data invalid. Please Fill all Reqiured Fields");
             console.log('Form is invalid. Please fix the errors.');
           }
     }
@@ -341,6 +310,38 @@ export class ViewTasksComponent {
   
     onFilterChange(): void {
       this.loadTasks({first:0,rows:10});
+    }
+
+
+    showMessage(message:string) {
+      this.messageService.add({ 
+        severity: 'success', 
+        summary: 'Success', 
+        detail: message, 
+        life: 2000 
+      });
+    }
+  
+     // Method to trigger a failure (error) toast message
+    showError(message:string) {
+      this.messageService.add({ 
+        severity: 'error',  // Changed to 'error' for failure messages
+        summary: 'Failed', 
+        detail: `${message}, Please try again.`, 
+        life: 4000  // Message will disappear after 4 seconds
+      });
+    }
+
+    showSessionExpired(){
+      this.messageService.add({ 
+        severity: 'warn',  // Changed to 'error' for failure messages
+        summary: 'Session Expired.', 
+        detail: `Please Login Again`, 
+        life: 4000  // Message will disappear after 4 seconds
+      });
+      setTimeout(() => {
+        this.userService.clearUserData();
+      }, 4000);
     }
 
 }

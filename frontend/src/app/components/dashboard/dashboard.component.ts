@@ -9,9 +9,8 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-dashboard',
   imports: [
     CommonModule,
-    FormsModule,
-    HeaderComponent,
-    RouterOutlet
+    FormsModule
+    
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

@@ -66,7 +66,7 @@ export const authenticateUser = async(email, password) => {
       if (!isMatch) {
         throw new Error('Invalid credentials');  // If the password doesn't match
       }
-      const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
       return { user, token };  
     } catch (error) {
       throw new Error('Login failed:' + error.message);

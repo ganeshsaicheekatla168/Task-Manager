@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
 
 router.post('/add', addUser);
 // Route for checking if an email exists
-router.get('/check-email',checkEmailExistence);
+router.get('/check-email',verifyToken,checkEmailExistence);
 
 router.post('/login',login);
 

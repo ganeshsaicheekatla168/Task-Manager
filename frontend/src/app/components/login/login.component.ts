@@ -1,23 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { UserService } from '../../services/users/user.service';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-login',
-  imports: [ButtonModule,InputTextModule,RouterLink,ReactiveFormsModule,FormsModule,CommonModule],
+  imports: [ButtonModule,InputTextModule,RouterLink,ReactiveFormsModule
+    ,FormsModule,CommonModule,ToastModule
+    ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  providers:[MessageService]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginForm: FormGroup;
-  errorMessage: string | null =null;
   passwordVisible:boolean = false;
-  constructor(private fb: FormBuilder,private userService:UserService , private router:Router) {
+  constructor(private fb: FormBuilder,private userService:UserService , private router:Router,private messageService:MessageService) {
     // Initialize the form group with validators
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]], // Email validation
@@ -26,6 +29,11 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  
 
   onSubmit() {
     if (this.loginForm.valid) {
@@ -41,19 +49,14 @@ export class LoginComponent {
             // You can store the token or handle further login actions, e.g., navigation to another page
             this.userService.setLoginStatus(true);
             this.userService.setUserInfo(loginData.data);
-            
-             this.loginForm.reset();
-             this.router.navigate(['/dashboard']); // Navigate to a protected route
+             this.showMessage();
+             
           } 
         },
         error: (err) => {
           // Handle HTTP or network errors
           console.error('Error during login:', err);
-
-          this.errorMessage = err.error.error.substring(13);
-          setTimeout(() => {
-            this.errorMessage='';
-             }, 4000);
+          this.showError(err.error.error.substring(13));
           
         },
         complete: () => {
@@ -63,8 +66,32 @@ export class LoginComponent {
       });
   
     } else {
-      this.errorMessage = 'Please fill in all fields correctly.';
+      this.showError("Form Data Invalid");
+      //this.errorMessage = 'Please fill in all fields correctly.';
     }
+  }
+
+  showMessage() {
+    this.messageService.add({ 
+      severity: 'success', 
+      summary: 'Success', 
+      detail: 'Login Success, Redirecting...', 
+      life: 2000 
+    });
+    setTimeout(() => {
+      this.loginForm.reset();
+      this.router.navigate(['/home/dashboard']); // Navigate to a protected route
+     }, 2000);
+  }
+
+   // Method to trigger a failure (error) toast message
+   showError(message:string) {
+    this.messageService.add({ 
+      severity: 'error',  // Changed to 'error' for failure messages
+      summary: 'Login Failed', 
+      detail: `${message}, Please try again.`, 
+      life: 4000  // Message will disappear after 4 seconds
+    });
   }
 
 }
