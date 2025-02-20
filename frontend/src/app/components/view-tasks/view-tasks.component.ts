@@ -41,8 +41,7 @@ import { MessageService } from 'primeng/api';
 })
 export class ViewTasksComponent {
 
-   today:Date = new Date();
-
+   
     currentTasks = [{
       "_id": "",
       "title": "fgfdfg",
@@ -244,6 +243,7 @@ export class ViewTasksComponent {
   
     editCurrentTask(task:any){
       this.editMode = true;
+      
       if(this.formData){
         // Set form values directly using patchValue
         this.formData.patchValue({
@@ -251,6 +251,7 @@ export class ViewTasksComponent {
           title: task.title,
           description: task.description,
           assignedTo: task.assignedTo,
+          dueDate:task.dueDate,
           priority: task.priority,
           status: task.status,
           isRead: task.isRead
@@ -301,7 +302,6 @@ export class ViewTasksComponent {
           }
     }
   
-   
     //used in form control
     clearData(){
       this.editMode = false;

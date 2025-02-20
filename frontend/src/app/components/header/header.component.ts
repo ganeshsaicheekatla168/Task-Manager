@@ -4,15 +4,17 @@ import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { UserService } from '../../services/users/user.service';
-import { MenuItem } from 'primeng/api';
-import { Router, RouterLink } from '@angular/router';
-import { AppService } from '../../services/apps/app.service';
-
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { RouterLink } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
-  imports: [MenuModule,AvatarModule,DrawerModule,ButtonModule,RouterLink],
+  imports: [MenuModule,AvatarModule,DrawerModule,ButtonModule,RouterLink,ToastModule,ConfirmDialogModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  providers:[MessageService,ConfirmationService,Router]
 })
 export class HeaderComponent implements OnInit {
   
@@ -26,16 +28,14 @@ export class HeaderComponent implements OnInit {
           icon: 'pi pi-envelope'
         },
         {
-          label: 'Logout',
-          icon: 'pi pi-sign-out',
-          
+         
         }
       ]
     }
   ];
   sideBarvisible:boolean=false;
 
-  constructor(private userService: UserService){}
+  constructor(private userService: UserService ,private messageService:MessageService,private confirmationService:ConfirmationService,private router:Router){}
 
   ngOnInit(): void {
     const userInfo = this.userService.getUserInfo();
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
           {
             label: 'Logout',
             icon: 'pi pi-sign-out',
-            command: () => this.logout()
+            command: () =>{ this.showLogoutConfirmation();}
           }
         ]
       }
@@ -59,8 +59,50 @@ export class HeaderComponent implements OnInit {
   }
  
 
-  logout(){
-    this.userService.clearUserData();
+  
+
+  showLogoutConfirmation() {
+    const firstName = this.userService.getUserInfo().first_name;
+    this.confirmationService.confirm({
+      message: `Are you sure you want to logout ${firstName}?`,
+      header: 'Logout Confirmation  ',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      acceptIcon: 'pi pi-check',
+      rejectIcon: 'pi pi-times',
+      accept: () => {
+        this.confirmLogout();
+      },
+      reject: () => {
+        this.cancelLogout();
+      },
+    });
+    
+  }
+
+  confirmLogout() {
+    this.messageService.add({ 
+      severity: 'success', 
+      summary: 'Success', 
+      detail: 'Redirecting to LoginPage...', 
+      life: 3000 
+    });
+    setTimeout(()=>{
+      this.userService.clearUserData();
+    },3000);
+  }
+
+   // Method to trigger a failure (error) toast message
+  cancelLogout() {
+    const firstName = this.userService.getUserInfo().first_name; // Get the user's first name
+    this.messageService.add({ 
+      severity: 'info',  // Changed to 'error' for failure messages
+      summary: 'Logout Cancelled', 
+      detail: `Thanks for staying, ${firstName}!`, 
+      life: 4000,  // Message will disappear after 4 seconds
+     
+    });
   }
 
  

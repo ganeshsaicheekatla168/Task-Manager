@@ -36,6 +36,7 @@
             optionLabel="name"           
             optionValue="name"               
           ></p-select>
+         
           <!-- Error message for Assigned To -->
           <div *ngIf="formData.get('assignedTo')?.touched && formData.get('assignedTo')?.invalid" class="text-red-500 text-sm mt-1">
             <div *ngIf="formData.get('assignedTo')?.errors?.['required']">Assigned To is required.</div>

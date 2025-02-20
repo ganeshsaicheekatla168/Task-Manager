@@ -3,6 +3,7 @@ import { DashboardComponent } from '../app/components/dashboard/dashboard.compon
 import { HomeComponent } from './components/home/home.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { ViewTasksComponent } from './components/view-tasks/view-tasks.component';
+import { authGuardGuard } from './guards/auth-guard.guard';
 
 export const routes: Routes = [
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
 {
         path: 'home',
         component: HomeComponent, 
+        canActivate:[authGuardGuard],
         children: [
           {
             path: 'dashboard',

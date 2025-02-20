@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { HeaderComponent } from '../header/header.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import { AutoCompleteModule } from 'primeng/autocomplete';
 @Component({
   selector: 'app-create-task',
   imports: [FormsModule , CommonModule ,
@@ -26,7 +26,8 @@ import { MessageService } from 'primeng/api';
       DatePickerModule ,
       ReactiveFormsModule,
       InputTextModule,
-      ToastModule
+      ToastModule,
+      AutoCompleteModule
       ],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.scss',
@@ -47,9 +48,7 @@ export class CreateTaskComponent {
   };
 
   today: Date = new Date();
-   
-
- 
+  
  
   
     
@@ -100,6 +99,11 @@ export class CreateTaskComponent {
     ngOnInit(): void {
       // Load your Tasks here
       this.loadUserList();
+    }
+
+    search(event:any){
+      console.log(event);
+      console.log(this.users);
     }
   
 
