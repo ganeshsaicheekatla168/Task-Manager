@@ -53,8 +53,10 @@ export const checkEmailExistence = async (req, res) => {
   export const login = async (req, res) => {
     try {
       const { email, password } = req.body;
-      const { user, token } = await authenticateUser(email, password);
-  
+      
+      const { user, token } = await authenticateUser(email, password,req.query.rememberme? true : false);
+
+      
       return res.status(200).json({
         success: true,
         data: { user_id: user._id,first_name:user.first_name , email: user.email, token },

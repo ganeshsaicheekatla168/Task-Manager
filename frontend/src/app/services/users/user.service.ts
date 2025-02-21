@@ -34,10 +34,10 @@ export class UserService {
   }
 
   // Sign In method
-  signIn(user: any): Observable<{ success: boolean; data: { user_id: string; first_name: string; email: string; token: string }; error: string }> {
+  signIn(user: any,rememberme:boolean): Observable<{ success: boolean; data: { user_id: string; first_name: string; email: string; token: string }; error: string }> {
     return this.http
       .post<{ success: boolean; data: { user_id: string; first_name: string; email: string; token: string }; error: string }>(
-        `${this.apiUrl}/login`,
+        `${this.apiUrl}/login?rememberme=${rememberme}`,
         { email: user.email, password: user.password } // Assuming the user object contains email and password
       );
   }
