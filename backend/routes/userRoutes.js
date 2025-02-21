@@ -1,5 +1,5 @@
 import express from 'express';
-import { addUser,checkEmailExistence,login ,getAllUsersNameAndID} from '../controllers/userController.js'; // Adjust path as necessary
+import { addUser,checkEmailExistence,login ,getAllUsersNameAndID , ForgotPassword , resetPassword} from '../controllers/userController.js'; // Adjust path as necessary
 import jwt from 'jsonwebtoken';
 const router = express.Router();
 
@@ -31,5 +31,8 @@ router.get('/check-email',verifyToken,checkEmailExistence);
 router.post('/login',login);
 
 router.get('/getNamesAndIDs',verifyToken,getAllUsersNameAndID );
+
+router.post('/forgot-password' , ForgotPassword);
+router.post('/reset-password' , resetPassword);
 
 export default router;
