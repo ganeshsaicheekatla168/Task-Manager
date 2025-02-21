@@ -2,6 +2,7 @@ import User from '../models/userModel.js'; // Adjust path as necessary
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';  // Import dotenv package
 import bcrypt from 'bcrypt'; // ES6 import (if your Node.js supports it)
+import nodemailer from "nodemailer";
 dotenv.config();  // Load the .env file and set variables in process.env
  export const createUserService = async ({ first_name, last_name, email, password }) => {
   try {
@@ -78,3 +79,105 @@ export const authenticateUser = async(email, password) => {
 export const getAllUsersNameAndIDService = async () => {
   return User.find().select('first_name _id');  // Exclude password field for security
 };
+
+export const forgotPasswordService = async (email) => {
+  try {
+      console.log(`We have to send the mail to ${email} to update the password`);
+
+      // Find the user by email
+      const user = await User.findOne({ email });
+     
+      if (!user) {
+        
+          return {
+              success: false,
+              errorMessage: "User not found with the given email"
+          };
+      }
+
+      console.log(`User ID: ${user._id}`,process.env.JWT_SECRET_KEY);
+
+      // Create a JWT token
+      const token = jwt.sign({ id: user._id },  process.env.JWT_SECRET_KEY, { expiresIn: '5m' });
+
+      const resetLink = `http://localhost:4200/reset-password?token=${token}`;
+
+      // Set up email transporter
+      const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+              user: "bujjipillamgolla6@gmail.com",
+              pass: "wuke htco bemp tktr"  // Remember to securely store this (use environment variables)
+          }
+      });
+      
+      // Mail options
+      const mailOptions = {
+          from: "bujjipillamgolla6@gmail.com",
+          to: email,
+          subject: "Ingore the mail if not you. Password reset link it will expired in 5min ",
+          text: `Click on the link to reset your password: ${resetLink}`
+      };
+     
+      // Send email
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.log(error);
+              return {
+                  success: false,
+                  errorMessage: 'Failed to send email'
+              };
+          }
+      });
+  
+      return {
+        success: true,
+        user: { _id: user._id, email: user.email }
+     };
+  } catch (error) {
+      console.log(error);
+      return {
+          success: false,
+          errorMessage: error.message || 'An error occurred during the password reset process'
+      };
+  }
+};
+
+export const resetPasswordService = async (token, newPassword) => {
+  try {
+      console.log(`Token in backend to reset password: ${token}`);
+
+      // Verifying the JWT token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);  
+      const user = await User.findById(decoded.id);
+
+      if (!user) {
+          return {
+              success: false,
+              errorMessage: 'User not found'
+          };
+      }
+
+      console.log("While updating in database");
+
+      // Hashing the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+
+      // Saving the updated user with the new password
+      await user.save();
+
+      return {
+          success: true,
+          user: { _id: user._id, email: user.email }
+      };
+  } catch (error) {
+      console.log(error);
+      return {
+          success: false,
+          errorMessage: 'Invalid or expired token'
+      };
+  }
+};
+
+  

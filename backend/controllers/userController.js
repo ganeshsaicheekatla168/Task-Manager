@@ -1,4 +1,8 @@
-import { createUserService,checkEmailExistenceService,authenticateUser,getAllUsersNameAndIDService } from '../services/userService.js'; // Adjust path as necessary
+import { createUserService,checkEmailExistenceService,authenticateUser,getAllUsersNameAndIDService,forgotPasswordService,resetPasswordService } from '../services/userService.js'; // Adjust path as necessary
+import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt"
+
 
 export const addUser = async (req, res) => {
     const { first_name, last_name, email, password } = req.body;
@@ -95,6 +99,71 @@ export const getAllUsersNameAndID = async (req, res) => {
       data: null,
       error: error.message
     });
+  }
+};
+
+
+
+ 
+export const ForgotPassword = async (req, res) => {
+  try {
+      const { email } = req.body;
+      
+      // Call the forgotPasswordService and handle response in the controller
+      const result = await forgotPasswordService(email);
+      
+      if (result?.success) {
+        
+          res.status(200).json({
+              success: true,
+              data: { user_id: result.user._id, email: result.user.email },
+              error: null
+          });
+      } else {
+       
+          res.status(404).json({
+              success: false,
+              data: null,
+              error: { message: result?.errorMessage }
+          });
+      }
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({
+          success: false,
+          data: null,
+          error: { message: error.message || 'An unexpected error occurred' }
+      });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+      const { token, newPassword } = req.body;
+      
+      // Call the resetPasswordService and handle response in the controller
+      const result = await resetPasswordService(token, newPassword);
+
+      if (result.success) {
+          res.status(200).json({
+              success: true,
+              data: { user_id: result.user._id, email: result.user.email },
+              error: null
+          });
+      } else {
+          res.status(400).json({
+              success: false,
+              data: null,
+              error: { message: result.errorMessage }
+          });
+      }
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({
+          success: false,
+          data: null,
+          error: { message: error.message || 'An unexpected error occurred' }
+      });
   }
 };
 

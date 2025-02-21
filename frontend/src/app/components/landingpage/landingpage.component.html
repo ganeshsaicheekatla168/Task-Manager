@@ -1,0 +1,46 @@
+<header class="bg-white p-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Left Side: Logo -->
+      <div class="text-blue-600 text-2xl font-bold">
+        <img class="w-auto h-8 mx-5" src="images/logo.svg" alt="logo">
+      </div>
+  
+      <!-- Right Side: Navigation Links (Hidden on small screens) -->
+      <nav class="hidden md:flex space-x-8 text-blue-600 text-lg">
+        <!-- About Link with Icon -->
+        <a [routerLink]="'/about'" class="flex items-center space-x-2 border-2 border-blue-600 px-4 py-2 rounded-md hover:bg-sky-400 hover:text-white transition-all">
+          <span>About</span>
+        </a>
+      
+        <!-- Sign Up Link with Icon -->
+        <a [routerLink]="'/signup'" class="flex items-center space-x-2 border-2 border-blue-600 px-4 py-2 rounded-md hover:bg-sky-400 hover:text-white transition-all">
+          <i class="pi pi-user-plus w-5 h-5"></i> <!-- PrimeIcon for Sign Up -->
+          <span>Sign Up</span>
+        </a>
+      
+        <!-- Login Link with Icon -->
+        <a [routerLink]="'/login'" class="flex items-center space-x-2 border-2 border-blue-600 px-4 py-2 rounded-md hover:bg-sky-400 hover:text-white transition-all">
+          <i class="pi pi-sign-in w-5 h-5"></i> <!-- PrimeIcon for Login -->
+          <span>Login</span>
+        </a>
+      </nav>
+      
+      
+      
+  
+      <!-- Mobile Menu Button (Visible on small screens) -->
+      <button class="md:hidden text-blue-600" id="hamburger-menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <!-- Mobile Dropdown Menu -->
+    <div class="md:hidden bg-white text-blue-600 space-y-4 p-4 hidden" id="mobile-menu">
+      <a [routerLink]="'/about'" class="block hover:text-gray-500 transition-all">About</a>
+      <a [routerLink]="'/signup'" class="block hover:text-gray-500 transition-all">Sign Up</a>
+      <a [routerLink]="'/login'"class="block hover:text-gray-500 transition-all">Login</a>
+    </div>
+  </header>
+<router-outlet></router-outlet>
