@@ -71,7 +71,7 @@
                     <td>{{ pagedTask.dueDate }}</td>
                     <td>{{ pagedTask.status }}</td>
                     <td>{{ pagedTask.priority }}</td> 
-                    <td>{{pagedTask.isRead}}</td>
+                    <td >{{pagedTask.isRead}}</td>
                 
                     <td>
                     <div class="flex gap-base mx-auto" >
@@ -109,7 +109,7 @@
           
   
     </div>
-    
+
     <p-dialog header="Edit Task Details" [(visible)]="editMode" [modal]="true" [closable]="false" [style]="{width: '500px'}">
         <!-- Form Binding to ngSubmit -->
         <form [formGroup]="formData" (ngSubmit)="confirmEditTask()">
@@ -143,8 +143,8 @@
             <div class="flex gap-4 mb-4">
                 <!-- Due Date (Date Picker) - Same height as Title & Assigned To -->
                 <div class="flex-1">
-                    <label for="dueDate" class="text-gray-700 font-medium ">Due Date*</label>
-                    <p-datepicker id="dueDate" formControlName="dueDate" class="w-full h-12" [minDate]="today"></p-datepicker>
+                    <label for="dueDate" class="text-gray-700 font-medium " >Due Date*</label>
+                    <p-datepicker id="dueDate" formControlName="dueDate" class="w-full h-12"  ></p-datepicker>
                     <!-- Error message for Due Date -->
                     <div *ngIf="formData.get('dueDate')?.touched && formData.get('dueDate')?.invalid" class="text-red-500 text-sm mt-1">
                         <div *ngIf="formData.get('dueDate')?.errors?.['required']">Due Date is required.</div>

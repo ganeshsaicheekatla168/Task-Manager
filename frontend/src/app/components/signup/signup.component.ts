@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -28,36 +28,41 @@ export class SignupComponent{
 
   registerForm: FormGroup;
   passwordVisible:boolean =false;
-  constructor(private userService:UserService,private messageService:MessageService,private router:Router) {
-    this.registerForm = new FormGroup({
-      'first_name': new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(35),
-        Validators.pattern('^[a-zA-Z].*')  // Starts with an alphabet
-      ]),
-      'last_name': new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(35),
-        Validators.pattern('^[a-zA-Z].*')  // Starts with an alphabet
-      ]),
-      'email': new FormControl(null, [
-        Validators.required,
-        Validators.email,  // Standard email validation
-        // You can add a custom validator for uniqueness (though that requires backend integration)
-      ]),
-      'password': new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(8),
-        Validators.pattern('^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#%$!&*])[a-zA-Z0-9#%$!&*]{8}$')
-        ]),
-      'terms': new FormControl(false, Validators.requiredTrue), // This is the terms checkbox control
-    });    
+  constructor(private userService:UserService,private messageService:MessageService,private router:Router,private fb:FormBuilder) {
+    this.registerForm = this.fb.group({
+      first_name: ['', [Validators.required, Validators.maxLength(35), Validators.pattern('^[a-zA-Z].*')]],
+      last_name: ['', [Validators.required, Validators.maxLength(35), Validators.pattern('^[a-zA-Z].*')]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.maxLength(8), Validators.pattern('^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#%$!&*])[a-zA-Z0-9#%$!&*]{8}$')]],
+      confirm_password: ['', [Validators.required]],
+      terms: [false, [Validators.requiredTrue]]
+    }, { 
+      validator: this.mustMatch('password', 'confirm_password') 
+    });   
+  }
+
+  mustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
+        return;
+      }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 
 
   
 
   onSubmit() {
+    delete this.registerForm.value.confirm_password;
     if (this.registerForm.valid) {
       // Handle form submission here try {
       try{

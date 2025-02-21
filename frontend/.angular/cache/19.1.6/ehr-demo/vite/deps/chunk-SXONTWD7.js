@@ -2,16 +2,16 @@ import {
   FilterMatchMode,
   setAttribute,
   setAttributes
-} from "./chunk-KQ4ST5G5.js";
+} from "./chunk-SAMP7MZN.js";
 import {
   config_default,
   dt,
   service_default
-} from "./chunk-CWYBPNCF.js";
+} from "./chunk-TZIJKBMI.js";
 import {
   minifyCSS,
   resolve
-} from "./chunk-NJ25EVEJ.js";
+} from "./chunk-YAPJLE7E.js";
 import {
   DOCUMENT
 } from "./chunk-NE4OEYRM.js";
@@ -691,4 +691,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-5ZRWFWKC.js.map
+//# sourceMappingURL=chunk-SXONTWD7.js.map

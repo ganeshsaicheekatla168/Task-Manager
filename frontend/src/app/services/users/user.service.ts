@@ -2,15 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AppService } from '../apps/app.service';
-
+import { session } from '../../utils/session';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiUrl = 'http://localhost:3000/api/users';  // Example API URL
   private loginStatus = false;
-  private tokenExpiredMsg = '';
+  
   private userInfo = {
     user_id: '',
     first_name: '',
@@ -82,6 +81,7 @@ export class UserService {
     localStorage.removeItem('loginStatus');
     localStorage.removeItem('token');
     this.setLoginStatus(false);  
+    session.loginStatus = false;
     this.router.navigate(['/login']);
   }
   

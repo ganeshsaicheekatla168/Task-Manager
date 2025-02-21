@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { UserService } from '../../services/users/user.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { session } from '../../utils/session';
 @Component({
   selector: 'app-login',
   imports: [ButtonModule,InputTextModule,RouterLink,ReactiveFormsModule
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+   
   }
 
   
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit{
             this.userService.setLoginStatus(true);
             this.userService.setUserInfo(loginData.data);
              this.showMessage();
-             
+             session.loginStatus = true;
           } 
         },
         error: (err) => {
