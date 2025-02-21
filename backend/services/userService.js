@@ -49,7 +49,7 @@ export const checkEmailExistenceService = async (email) => {
 
 
 // Method to authenticate user during login
-export const authenticateUser = async(email, password) => {
+export const authenticateUser = async(email, password,rememberme) => {
     try {
        //converting user email to smaller case letters
        email = email.toLowerCase();
@@ -66,7 +66,14 @@ export const authenticateUser = async(email, password) => {
       if (!isMatch) {
         throw new Error('Invalid credentials');  // If the password doesn't match
       }
-      const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+      let token;
+      if(!rememberme){
+           token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+      }
+      else{
+         token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET_KEY);
+        console.log("hi");
+      }
       return { user, token };  
     } catch (error) {
       throw new Error('Login failed:' + error.message);

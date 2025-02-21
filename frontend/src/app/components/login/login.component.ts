@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit{
     if (this.loginForm.valid) {
       // Simulating success (In real-world, you would authenticate with an API)
       const userLoginData = {'email':this.loginForm.value.email , 'password':this.loginForm.value.password}
-      const response =  this.userService.signIn(userLoginData);
+      const response =  this.userService.signIn(userLoginData ,this.loginForm.value.remember);
       response.subscribe({
         next: (loginData) => {
          
