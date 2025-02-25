@@ -1,0 +1,66 @@
+:root {
+    --info-warning-text: #B45309;
+    --info-warning-bg: #FFF9EB;
+    --info-warning-border: #FEF3C7;
+    
+    --info-danger-text: #B91C1C;
+    --info-danger-bg: #FFF1F6;
+    --info-danger-border: #FEE2E2;
+
+    --info-success-text: #047857;
+    --info-success-bg: #e8fff3;
+    --info-success-border: #C8F3DD;
+
+    --info-information-text: #494949;
+    --info-information-bg: #F7F6F9;
+    --info-information-border: #EFE7FF;
+}
+
+
+.info-success, .info-warning, .info-danger, .info-information {
+    padding: 8px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.info-warning {
+    background-color: var(--info-warning-bg);
+    color: var(--info-warning-text);
+    border-color: var(--info-warning-border);    
+}
+.info-warning[slot="prefix"] {
+    color: var(--info-warning-text);
+}
+
+.info-danger {
+    background-color: var(--info-danger-bg);
+    color: var(--info-danger-text);
+    border-color: var(--info-danger-border);
+}
+.info-danger[slot="prefix"] {
+    color: var(--info-danger-text);
+}
+
+.info-success {
+    background-color: var(--info-success-bg);
+    color: var(--info-success-text);
+    border-color: var(--info-success-border);
+}
+.info-success[slot="prefix"] {
+    color: var(--info-success-text);
+}
+
+.info-information {
+    background-color: var(--info-information-bg);
+    color: var(--info-information-text);
+    border-color: var(--info-information-border);
+}
+.info-information[slot="prefix"] {
+    color: var(--info-information-text);
+}

@@ -1,0 +1,80 @@
+// --height-default: 36px;
+// --height-2xs: 24px;
+// --height-xs: 26px;
+// --height-sm: 30px;
+// --height-md: 44px;
+// --height-lg: 52px;
+// --height-xl: 60px;
+
+// OTHER SIZE VARIATIONS ALSO SHOUD BE HERE
+button
+{
+    @apply focus:outline-primary-base;
+}
+
+button[icon], ed-icon {
+    @apply flex items-center justify-center transition-all w-9 h-9 duration-300; // bg-white
+    border-radius: 3px;
+}
+
+button[icon][variant="danger"] {
+    @apply border bg-red-50 border-red-200 text-red-500 hover:text-red-600 hover:border-red-300 hover:bg-red-100;
+}
+
+button[icon][variant="warning"] {
+    @apply border bg-orange-50 border-orange-200 text-orange-500 hover:text-orange-600 hover:border-orange-300 hover:bg-orange-100;
+}
+
+
+button[icon] {
+    @apply bg-blue-50 border border-blue-200 hover:bg-blue-100;
+
+    &:hover {
+        color: #005CF3;
+    }
+}
+
+button[icon][transparent] {
+    @apply bg-transparent border border-transparent transition-all duration-200 rounded;
+
+    &:hover {
+        @apply bg-primary-50 text-dark;
+    }
+    &:active {
+        @apply border border-primary-600 text-primary-600;
+    }
+}
+
+sl-dropdown[open] button.active[icon][transparent] {
+    @apply bg-primary-50 text-dark;
+}
+
+
+button[icon][size="md"], ed-icon[size="md"] {
+    width: var(--height-md);
+    height: var(--height-md);
+    border-radius: 6px;
+}
+
+button[icon][size="sm"], ed-icon[size="sm"] {
+    width: var(--height-sm);
+    height: var(--height-sm);
+    border-radius: 4px;
+}
+
+button[icon][size="xs"], ed-icon[size="xs"] {
+    width: var(--height-xs);
+    height: var(--height-xs);
+    border-radius: 4px;
+}
+
+button[icon][size="2xs"], ed-icon[size="2xs"] {
+    width: var(--height-2xs);
+    height: var(--height-2xs);
+    border-radius: 2px;
+}
+
+
+button[variant="link"] {
+  @apply text-primary-500 hover:text-primary-600 hover:underline;
+}

@@ -1,0 +1,22 @@
+.ed-tabs {
+    @apply flex gap-base relative focus:outline-primary-base;
+
+    // &::after {
+    //     @apply absolute top-full border-b-2 border-gray-100 w-full;
+    //     content: "";   
+    // }
+
+    .trigger {
+        @apply text-sm px-3 py-2 focus:outline-primary-base;
+
+        // @screen xl-only 
+        // {
+        //     @apply px-sm
+        // } 
+    }
+    .active {
+        @apply border-b-2 border-primary-base  text-primary-base;
+    }
+}
+
+

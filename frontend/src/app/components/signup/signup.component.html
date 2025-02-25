@@ -1,0 +1,126 @@
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
+      <a href="#" class="flex items-center mb-2">
+        <img class="w-auto h-12 mr-2" src="images/logo.svg" alt="logo">
+      </a>
+      <div class="w-full bg-white rounded-lg shadow dark:border mt-4 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 px-8 space-y-2 ">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            Create a new account
+          </h1>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4 w-full">
+            
+            <!-- First and Last Name Side by Side -->
+            <div class="grid grid-cols-2 gap-2">
+              <!-- First Name -->
+              <div>
+                <label for="first_name" class="block -2 text-sm font-medium text-gray-900 dark:text-white">First Name*</label>
+                <input type="text" id="first_name" formControlName="first_name" class="block w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                <div *ngIf="registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched" class="text-red-500 text-sm">
+                  <div *ngIf="registerForm.get('first_name')?.hasError('required')">First name is required.</div>
+                  <div *ngIf="registerForm.get('first_name')?.hasError('maxlength')">First name cannot be longer than 35 characters.</div>
+                  <div *ngIf="registerForm.get('first_name')?.hasError('pattern')">First name must start with letter.</div>
+                </div>
+              </div>
+  
+              <!-- Last Name -->
+              <div>
+                <label for="last_name" class="block -2 text-sm font-medium text-gray-900 dark:text-white">Last Name*</label>
+                <input type="text" id="last_name" formControlName="last_name" class="block w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                <div *ngIf="registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched" class="text-red-500 text-sm">
+                  <div *ngIf="registerForm.get('last_name')?.hasError('required')">Last name is required.</div>
+                  <div *ngIf="registerForm.get('last_name')?.hasError('maxlength')">Last name cannot be longer than 35 characters.</div>
+                  <div *ngIf="registerForm.get('last_name')?.hasError('pattern')">Last name must start with  letter.</div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white">Your email*</label>
+              <input type="email" id="email" formControlName="email" class="block w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-sm">
+                <div *ngIf="registerForm.get('email')?.hasError('required')">Email is required.</div>
+                <div *ngIf="registerForm.get('email')?.hasError('email')">Please enter a valid email.</div>
+              </div>
+            </div>
+  
+           <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white">Password*</label>
+                <div class="relative">
+                <input 
+                    [type]="passwordVisible ? 'text' : 'password'" 
+                    id="password" 
+                    formControlName="password" 
+                    class="block w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
+                />
+                
+                <!-- Visibility Toggle Button -->
+                <button 
+                    type="button" 
+                    (click)="passwordVisible = !passwordVisible" 
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-white">
+                    
+                </button>
+                </div>
+            
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-sm">
+                <div *ngIf="registerForm.get('password')?.hasError('required')">Password is required.</div>
+                <div *ngIf="registerForm.get('password')?.hasError('maxlength')">Password must not exceed 8 characters.</div>
+                <div *ngIf="registerForm.get('password')?.hasError('pattern')">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character from this  [#%$!&*].</div>
+                </div>
+            </div>
+            
+            <!-- Confirm Password -->
+            <div>
+                <label for="confirm_password" class="block text-sm font-medium text-gray-900 dark:text-white">Confirm Password*</label>
+                <div class="relative">
+                <input 
+                    [type]="passwordVisible ? 'text' : 'password'" 
+                    id="confirm_password" 
+                    formControlName="confirm_password" 
+                    class="block w-full px-4 py-2 text-sm text-gray-900 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
+                />
+                
+                <!-- Visibility Toggle Button -->
+                <button 
+                    type="button" 
+                    (click)="passwordVisible = !passwordVisible" 
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-white">
+                    
+                    
+                </button>
+                </div>
+                <div *ngIf="registerForm.get('confirm_password')?.invalid && registerForm.get('confirm_password')?.touched" class="text-red-500 text-sm">
+                <div *ngIf="registerForm.get('confirm_password')?.hasError('required')">Confirm password is required.</div>
+                <div *ngIf="registerForm.get('confirm_password')?.hasError('mustMatch')">Passwords must match.</div>
+                </div>
+            </div>
+            
+  
+            <!-- Terms and Conditions -->
+            <div class="flex items-center">
+              <div class="flex items-center h-5">
+                <input id="terms" aria-describedby="terms" type="checkbox" formControlName="terms" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="terms" class="text-gray-500 dark:text-gray-300">I agree to the <a href="#" class="text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions*</a></label>
+              </div>
+            </div>
+  
+            <!-- Submit Button -->
+            <div class="w-full">
+              <p-button label="Sign Up" type="submit" class="grid" [disabled]="registerForm.invalid"></p-button>
+            </div>
+  
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+              Already have an account? <a [routerLink]="'/login'" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+<p-toast/>
+  

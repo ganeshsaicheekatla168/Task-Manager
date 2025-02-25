@@ -1,0 +1,1 @@
+.ed-tabs{@apply flex gap-base relative}.ed-tabs .trigger{@apply text-sm px-4 py-2}.ed-tabs .active{@apply border-b-2 border-primary-base font-medium text-primary-base}

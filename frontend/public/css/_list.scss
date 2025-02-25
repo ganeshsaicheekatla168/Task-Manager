@@ -1,0 +1,51 @@
+// ul[type="medication"] li::marker {
+//     // content: attr(data-icon);
+//     // content: "";
+//     font-size: 1.25em;
+//     color: red;
+//     padding-left: 16px;    
+// }
+
+ul[type="medication"], ul[type="problems"], ul[type="allergies"], ul[type="labs"], ul[type="immunization"], ul[type="past-history"] {
+    padding-left: 20px;
+
+    li {
+        position: relative;
+    }
+
+    li::before {
+        // content: attr(data-icon);
+        content: '\2022 ';
+        /* font-seze - Make slightly larger than the li font-size
+        but smaller than the li gap */
+        font-size: 1.40rem;
+        padding-left: 16px;
+        position: absolute;
+        left: -36px;
+        top: -9px;
+    }
+}
+
+ul[type="medication"] li::before {
+    color: hsl(var(--text-brand));
+}
+
+ul[type="problems"] li::before {
+    color: #ff5733;
+}
+
+ul[type="allergies"] li::before {
+    color: #d9534f;
+}
+
+ul[type="labs"] li::before {
+    color: #5bc0de;
+}
+
+ul[type="immunization"] li::before {
+    color: #5cb85c;
+}
+
+ul[type="past-history"] li::before {
+    color: #f0ad4e;
+}

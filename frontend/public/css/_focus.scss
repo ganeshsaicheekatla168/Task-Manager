@@ -1,0 +1,15 @@
+:focus-visible {
+    outline-color: var(--sl-color-primary-600);
+}
+
+button:focus-visible, a:focus-visible {
+    outline: var(--sl-color-primary-600) solid var(--focus-ring-width);
+    outline-offset: var(--outline-offset);
+    transition: none !important;
+}
+
+.ed-focus {
+    // @apply focus-visible:ring-offset-2 
+    // focus-visible:ring-1 
+    // focus-visible:ring-primary-600;
+}
