@@ -7,42 +7,46 @@ import { authGuardGuard } from './guards/auth-guard.guard';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
- 
+import { LandingpageComponent } from './components/landingpage/landingpage.component';
+import { AboutpageComponent } from './components/aboutpage/aboutpage.component';
+import { SignupComponent } from '../app/components/signup/signup.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+
 export const routes: Routes = [
- 
+
   {path:'', redirectTo:'/login', pathMatch:'full'},
-   
-{
+
+  {
     path : "login",
     component:LoginComponent,
     canActivate:[authGuardGuard]
    
 }
 ,
- 
-   
-{
+
+
+  {
         path: 'home',
-        component: HomeComponent,
-        canActivate:[authGuardGuard],
-        children: [
-          {
-            path: 'dashboard',
-            component: DashboardComponent,
-            canActivate:[authGuardGuard]
-          },
-          {
-            path: 'createTask',
-            component: CreateTaskComponent,
-            canActivate:[authGuardGuard]
-          },
-          {
-            path : "viewTasks",
-            component:ViewTasksComponent,
-            canActivate:[authGuardGuard]
-          }
-       
-        ]
+    component: HomeComponent,
+    canActivate: [authGuardGuard],
+    children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [authGuardGuard]
+      },
+      {
+        path: 'createTask',
+        component: CreateTaskComponent,
+        canActivate: [authGuardGuard]
+      },
+      {
+        path: "viewTasks",
+        component: ViewTasksComponent,
+        canActivate: [authGuardGuard]
+      }
+
+    ]
 }
 ,{
     path : "signup",
@@ -63,18 +67,17 @@ export const routes: Routes = [
       m => m.ForgotPasswordComponent
     )
   }
-},
- 
- 
-{
+  },
+
+
+  {
   path : "reset-password" ,
   canActivate:[authGuardGuard],
   component:ResetPasswordComponent
-},
-{
-  path: "**",
-  component:PageNotFoundComponent
-}
- 
+  },
+  {
+    path: "**",
+    component: PageNotFoundComponent
+  }
+
 ];
- 

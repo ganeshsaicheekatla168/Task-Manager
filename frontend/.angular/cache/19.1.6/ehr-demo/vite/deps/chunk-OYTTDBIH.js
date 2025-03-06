@@ -1,13 +1,13 @@
 import {
-  config_default,
-  dt,
-  service_default
-} from "./chunk-CWYBPNCF.js";
-import {
   FilterMatchMode,
   setAttribute,
   setAttributes
 } from "./chunk-HOIEMOJD.js";
+import {
+  config_default,
+  dt,
+  service_default
+} from "./chunk-CWYBPNCF.js";
 import {
   minifyCSS,
   resolve
@@ -691,4 +691,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-5IUISVVH.js.map
+//# sourceMappingURL=chunk-OYTTDBIH.js.map

@@ -6,50 +6,61 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TaskService {
+ 
   private apiUrl = 'http://localhost:3000/api/tasks';
- 
-  constructor(private http:HttpClient) { 
-   
+
+  constructor(private http: HttpClient) {
+
   }
- 
- 
-   // Example method to register the user
-    onTaskCreate(task: any):Observable<{ success: boolean; data: any; error: string }>{
-      // Retrieve the JWT token from localStorage or wherever you have it stored
-     const token = localStorage.getItem('token');
 
-     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return  this.http.post<{ success: boolean; data: any; error: string }>(`${this.apiUrl}/add`, task,{headers});
-    }
 
-    onFetchTask():Observable<{ success: boolean; data: []; error: string }>{
-      // Retrieve the JWT token from localStorage or wherever you have it stored
-     const token = localStorage.getItem('token');
+  // Example method to register the user
+  onTaskCreate(task: any): Observable<{ success: boolean; data: any; error: string }> {
+    // Retrieve the JWT token from localStorage or wherever you have it stored
+    const token = localStorage.getItem('token');
 
-     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-     console.log(token);
-      return  this.http.get<{ success: boolean; data: []; error: string }>(`${this.apiUrl}/all`,{headers});
-      
-    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<{ success: boolean; data: any; error: string }>(`${this.apiUrl}/add`, task, { headers });
+  }
 
-    onTaskUpdate(taskId:string , updatedTask : any){
-      // Retrieve the JWT token from localStorage or wherever you have it stored
-      console.log(`printing task id in update ${taskId}`)
-     const token = localStorage.getItem('token');
+  onFetchTask(): Observable<{ success: boolean; data: []; error: string }> {
+    // Retrieve the JWT token from localStorage or wherever you have it stored
+    const token = localStorage.getItem('token');
 
-     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-     console.log(token);
-      return  this.http.put<{ success: boolean; data: []; error: string }>(`${this.apiUrl}/update/${taskId}`,updatedTask,{headers});
-    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-      // Service function to fetch tasks with pagination and filters
-    onFetchCurrentPageTasks(page: number, limit: number, priority: string = '', status: string = '',title: string = ''): Observable<any> {
-       // Retrieve the JWT token from localStorage or wherever you have it stored
-     const token = localStorage.getItem('token');
+    return this.http.get<{ success: boolean; data: []; error: string }>(`${this.apiUrl}/all`, { headers });
 
-     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
 
-      const url = `${this.apiUrl}/paginatedTasks?page=${page}&limit=${limit}&priority=${priority}&status=${status}&title=${title}`;
-      return this.http.get<any>(url,{headers});
-    }
+  onTaskDelete(deleteTaskId: string): Observable<{ success: boolean; data: []; error: string }>  {
+    // Retrieve the JWT token from localStorage or wherever you have it stored
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete<{ success: boolean; data: []; error: string }>(`${this.apiUrl}/delete/${deleteTaskId}`, { headers });
+
+  }
+
+  onTaskUpdate(taskId: string, updatedTask: any) {
+    // Retrieve the JWT token from localStorage or wherever you have it stored
+    console.log(`printing task id in update ${taskId}`)
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log(token);
+    return this.http.put<{ success: boolean; data: []; error: string }>(`${this.apiUrl}/update/${taskId}`, updatedTask, { headers });
+  }
+
+
+
+  // Service function to fetch tasks with pagination and filters
+  onFetchCurrentPageTasks(page: number, limit: number, priority: string = '', status: string = '', title: string = '',assignedToUser:string=''): Observable<any> {
+    // Retrieve the JWT token from localStorage or wherever you have it stored
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const url = `${this.apiUrl}/paginatedTasks?page=${page}&limit=${limit}&priority=${priority}&status=${status}&title=${title}&assignedToUser=${assignedToUser}`;
+    return this.http.get<any>(url, { headers });
+  }
 }

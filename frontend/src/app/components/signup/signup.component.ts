@@ -104,7 +104,7 @@ export class SignupComponent{
   showMessage() {
     this.messageService.add({ 
       severity: 'success', 
-      summary: '', 
+      summary: 'Registration successfull', 
       detail: 'Redirecting to Login...', 
       life: 2000 
     });

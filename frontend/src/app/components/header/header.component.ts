@@ -87,16 +87,4 @@ export class HeaderComponent implements OnInit {
     window.location.reload();
   }
 
-  //  // Method to trigger a failure (error) toast message
-  // cancelLogout() {
-  //   const firstName = this.userService.getUserInfo().first_name; // Get the user's first name
-  //   this.messageService.add({ 
-  //     severity: 'info',  // Changed to 'error' for failure messages
-  //     summary: 'Logout Cancelled', 
-  //     detail: `Thanks for staying, ${firstName}!`, 
-  //     life: 4000,  // Message will disappear after 4 seconds
-     
-  //   });
-  // }
-
 }
