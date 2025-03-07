@@ -1,0 +1,10 @@
+
+
+/* Optional: Add hover effects */
+::ng-deep .p-confirm-dialog{
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  ::ng-deep .p-confirm-dialog .p-button.pi.pi-times:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }

@@ -1,0 +1,137 @@
+:root {
+
+    // FIRST CREATE DEFAULT VARIABLES AND ASSIGN IT TO SHOELACE
+
+    
+    --font-size-base: 13px;
+    --sl-font-size-medium: var(--font-size-base);  //DEFAULT IS 14PX
+
+    --option-active-border-width: 3px;
+    
+    /* PRIMARY COLOR PALETTE */
+    --sl-color-primary-50: hsl(203, 100%, 97%);
+    --sl-color-primary-100: hsl(208, 100%, 91%);
+    --sl-color-primary-200: hsl(208, 100%, 85%);
+    --sl-color-primary-300: hsl(206, 100%, 74%);
+    --sl-color-primary-400: hsl(204, 100%, 65%);
+    --sl-color-primary-500: hsl(206, 100%, 58%);
+    --sl-color-primary-600: hsl(217, 100%, 53%);
+    --sl-color-primary-700: hsl(216, 100%, 48%); // PRIMARY COLOR OF THE APPLICATION
+    --sl-color-primary-800: hsl(222, 90%, 41%);
+    --sl-color-primary-900: hsl(224, 90%, 35%);
+    --sl-color-primary-950: hsl(223, 85%, 22%);   
+
+
+
+
+    --outline-offset: 2px;
+    --focus-ring-width: 2px;
+    --sl-font-sans: 'Inter', sans-serif;
+    --sl-focus-ring-width: var(--focus-ring-width);
+    --sl-focus-ring-offset: var(--outline-offset);
+    --sl-focus-ring-color: var(--sl-color-primary-600);
+
+
+    
+
+    /* SIDE NAVIGATION WIDTH */
+    --sidenav-width: 4rem;
+
+    // SL TOOLTIP ARROW SIZE
+    --sl-tooltip-arrow-size: 0;
+
+
+     // BASE TEXT COLORS
+     --text-foreground: 236 10% 32%;
+     --text-dark: 223 9% 16%;
+     --text-light: 218 10% 48%;
+     --text-lighter: 218 11% 60%;
+     --text-brand: 214 82% 51%;
+
+     /* PRIMARY BUTTON VARIABLES */
+     --btn-primary-bg: rgb(0, 105, 224);
+     --btn-primary-border: hsla(212, 100%, 44%, 1);
+     --btn-primary-text: hsla(0, 0%, 100%, 1);
+     --btn-primary-hover-bg: hsla(212, 100%, 44%, 0.80);
+     --btn-primary-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-primary-hover-text: hsla(212, 100%, 44%, 0.30);
+
+     --btn-primary-outline-bg: hsla(0, 0%, 100%, 1);
+     --btn-primary-outline-border: hsla(0, 0%, 83%, 1);
+     --btn-primary-outline-text: hsla(212, 100%, 44%, 1);
+     --btn-primary-outline-hover-bg: hsla(212, 100%, 44%, 0.10);
+     --btn-primary-outline-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-primary-outline-hover-text: hsla(212, 100%, 44%, 0.30);
+
+     --btn-primary-text-bg: transparent;
+     --btn-primary-text-border: transparent;
+     --btn-primary-text-text: hsla(212, 100%, 44%, 1);
+     --btn-primary-text-hover-bg: hsla(212, 100%, 44%, 0.10);
+     --btn-primary-text-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-primary-text-hover-text: hsla(212, 100%, 44%, 1);
+
+
+     /* SECONDARY BUTTON VARIABLES */
+     --btn-secondary-bg: hsla(210, 40%, 96%, 1);
+     --btn-secondary-border: hsla(210, 40%, 96%, 1);
+     --btn-secondary-text: hsla(0, 0%, 28%, 1);
+     --btn-secondary-hover-bg: hsla(210, 40%, 90%, 1);
+     --btn-secondary-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-secondary-hover-text: hsla(0, 0%, 28%, 1);
+
+     --btn-secondary-outline-bg: transparent;
+     --btn-secondary-outline-border: hsla(213, 27%, 84%, 1);
+     --btn-secondary-outline-text: hsla(0, 0%, 28%, 1);
+     --btn-secondary-outline-hover-bg: hsla(210, 40%, 96%, 1);
+     --btn-secondary-outline-hover-border: hsla(213, 27%, 84%, 1);
+     --btn-secondary-outline-hover-text: hsla(0, 0%, 28%, 1);
+
+     --btn-secondary-text-bg: transparent;
+     --btn-secondary-text-border: transparent;
+     --btn-secondary-text-text: hsla(0, 0%, 28%, 1);
+     --btn-secondary-text-hover-bg: hsla(210, 40%, 96%, 1);
+     --btn-secondary-text-hover-border: hsla(210, 40%, 96%, 1);
+     --btn-secondary-text-hover-text: hsla(0, 0%, 28%, 1);
+
+     /* TETRIARY BUTTON VARIABLES */
+     --btn-tetriary-bg: hsla(210, 100%, 96%, 1);
+     --btn-tetriary-border: hsla(213, 94%, 88%, 1);
+     --btn-tetriary-text: hsla(212, 100%, 44%, 1);
+     --btn-tetriary-hover-bg: hsla(212, 100%, 44%, 0.30);
+     --btn-tetriary-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-tetriary-hover-text: hsla(212, 100%, 44%, 1);
+
+     --btn-tetriary-outline-bg: hsla(0, 0%, 100%, 1);
+     --btn-tetriary-outline-border: hsla(213, 94%, 88%, 1);
+     --btn-tetriary-outline-text: hsla(212, 100%, 44%, 1);
+     --btn-tetriary-outline-hover-bg: hsla(212, 100%, 44%, 1);
+     --btn-tetriary-outline-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-tetriary-outline-hover-text: hsla(212, 100%, 44%, 0.30);
+
+     --btn-tetriary-text-bg: transparent;
+     --btn-tetriary-text-border: transparent;
+     --btn-tetriary-text-text: hsla(212, 100%, 44%, 1);
+     --btn-tetriary-text-hover-bg: hsla(212, 100%, 44%, 0.10);
+     --btn-tetriary-text-hover-border: hsla(212, 100%, 44%, 0.30);
+     --btn-tetriary-text-hover-text: hsla(212, 100%, 44%, 1);
+
+     --color-primary: hsl(214, 82%, 51%);
+     --color-secondary: hsl(214, 82%, 51%);
+     --color-success: rgb(33, 196, 93);
+     --color-danger: rgb(240, 81, 81);
+     --color-warning: rgb(249, 116, 21);
+     --color-info: rgb(13, 162, 231);
+     --color-dark: rgb(71, 71, 71);
+     --color-light: rgb(241, 245, 249);
+
+
+     /* INPUT HEIGHTS */
+     // ⁡⁣⁣⁡⁣⁣⁢additional border hight 2px will be added to this⁡
+     --height-default: 36px;
+     --height-2xs: 24px;
+     --height-xs: 26px;
+     --height-sm: 30px;
+     --height-md: 44px;
+     --height-lg: 52px;
+     --height-xl: 60px;
+}

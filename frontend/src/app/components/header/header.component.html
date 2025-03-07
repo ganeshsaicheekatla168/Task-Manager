@@ -1,0 +1,77 @@
+<div class="flex  bg-gray-100 ">
+
+
+    <!-- sidebar -->
+    <div class="hidden md:flex flex-col w-100 bg-gray-800 mt-8">
+        <p-drawer [(visible)]="sideBarvisible" [closable]="false" [position]="'left'">
+            <!-- Header Section with Image -->
+            <div class="flex items-center justify-between  h-10 w-100">
+                <p class="pl-5 text-2xl">Menu</p>
+                <p (click)="sideBarvisible=false" class="pr-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="width: 1.2rem; height: 1.2rem;">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </p>
+
+            </div>
+
+            <!-- Navigation Section -->
+            <div class="flex flex-col flex-1 overflow-y-auto text-sm">
+                <nav class="flex-1  py-3 bg-white">
+
+                    <a class="flex items-center px-4 py-2 mt-2 text-gray-700 hover:bg-gray-100 gap-4"
+                        [routerLink]="'/home/dashboard'" (click)="sideBarvisible=false">
+                        <i class="pi pi-home"></i>
+                        Dashboard
+                    </a>
+
+                    <a class="flex items-center px-4 py-2 mt-2 text-gray-700 hover:bg-gray-100 gap-4"
+                        [routerLink]="'/home/createTask'" (click)="sideBarvisible=false">
+
+                        <i class="pi pi-plus"></i>
+                        Create Task
+                    </a>
+
+                    <a class="flex items-center px-4 py-2 mt-2 text-gray-700 hover:bg-gray-100 gap-4"
+                        [routerLink]="'/home/viewTasks'" (click)="sideBarvisible=false">
+                        <i class="pi pi-eye"></i>
+                        View Tasks
+                    </a>
+
+
+
+
+                </nav>
+            </div>
+        </p-drawer>
+    </div>
+
+
+    <div class="flex flex-col flex-1 overflow-y-auto">
+        <div class="flex items-center justify-between h-16 bg-white border-b border-gray-200">
+            <!-- Header Section with Image -->
+
+            <div class="flex items-center px-4">
+
+                <button (click)="sideBarvisible = true" class="ml-3 my-auto">
+                    <i class="pi pi-bars"></i>
+                </button>
+                <!-- <input class="mx-4 w-full border rounded-md px-4 py-2" type="text" placeholder="Search"> -->
+                <img class="w-auto h-8 mx-5" src="images/logo.svg" alt="logo">
+            </div>
+            <div class="flex items-center pr-4">
+
+                <p-menu #menu [model]="items" [popup]="true" />
+                <p-avatar (click)="menu.toggle($event)" [label]="avatarLabel" styleClass="mr-2" size="normal"
+                    shape="circle" />
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<p-toast />
+<p-confirmdialog [closable]="false" styleClass="width:auto;" />

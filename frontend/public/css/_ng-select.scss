@@ -1,0 +1,113 @@
+// .ng-select[clearable="false"] .ng-clear-wrapper .ng-clear {
+//     font-size: 0 !important;
+// }
+::placeholder,
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    @apply text-light fs-base font-light;
+}
+
+.ng-select-container {
+    @apply transition-colors duration-300;
+
+    &:hover {
+        background-color: rgb(248 250 252) !important; // bg-slate-50
+    }
+}
+
+
+.ng-select .ng-select-container {
+    @apply border border-slate-300;
+    // border-width: 1px !important;
+}
+
+.border-error-inp.ng-select .ng-select-container {
+    @apply border border-red-300;
+}
+
+// .ng-select.border-error .ng-select-container, .ng-select.border-error-inp .ng-select-container {
+//     border-width: 0 !important;
+// }
+
+.is-sm.ng-select .ng-select-container {
+    min-height: auto;
+    height: 30px;
+}
+
+.is-md.ng-select .ng-select-container {
+    min-height: auto;
+    height: 44px;
+}
+
+.is-lg.ng-select .ng-select-container {
+    min-height: auto;
+    height: 52px;
+}
+
+[filledInput] .ng-select-container {
+    @apply bg-slate-100 border-0;
+}
+
+[filledInput]:focus-within .ng-select-container {
+    @apply bg-slate-200 border-0 transition-colors duration-300;
+}
+
+.ng-select .ng-arrow-wrapper {
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+}
+
+.ng-select {
+    &:hover {
+        .ng-arrow-wrapper {
+            opacity: 1;
+        }
+    }
+}
+
+.hover-arrow.ng-select .ng-arrow-wrapper {
+    opacity: 0;
+}
+
+.hover-arrow.ng-select {
+    &:hover {
+        .ng-arrow-wrapper {
+            opacity: 1;
+        }
+    }
+}
+
+.ng-select>.ng-select-container .ng-arrow {
+    top: 50% !important;
+    // transform: translateY(-50%) !important;
+    border-color: transparent !important;
+    border-width: 0 !important;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' stroke-opacity='0.9' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    display: inline-flex;
+    align-items: center;
+    white-space: break-spaces;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+    display: flex;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+    top: auto;
+}
+
+// TOP MARGIN FOR NG-SELECT RESULTS POPOVER
+.ng-dropdown-panel.ng-select-bottom {
+    margin-top: 2px;
+    border-radius: 6px;
+}
+.ng-dropdown-panel .scroll-host {
+    border-radius: 6px;
+}

@@ -1,0 +1,18 @@
+.drop-container {
+    @apply text-center border-dashed border-2 border-slate-400 rounded-lg flex flex-col bg-lighter py-md relative cursor-pointer mb-0;
+    // transition: background .2s ease-in-out, border .2s ease-in-out;
+        // background: #f2f5f7 url(../../../../assets/images/bgstrips.svg) repeat 0 0 !important;
+        // background: #71717A !important;
+}
+
+.drop-container:hover {
+    @apply border-slate-300 bg-lighter cursor-pointer;
+}
+
+.drop-container input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    left: -2px;
+    top: -2px;
+}
